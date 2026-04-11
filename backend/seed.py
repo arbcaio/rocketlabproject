@@ -56,6 +56,19 @@ def parse_date(val: str):
         return None
 
 
+def clean_str(value: str) -> str:
+    """Remove aspas extras que o CSV deixa em nomes com caracteres especiais.
+    Ex: '"Monitor 24"" Prata"' → 'Monitor 24" Prata'
+    """
+    v = value.strip()
+    # Remove aspas que envolvem o valor inteiro
+    if len(v) >= 2 and v.startswith('"') and v.endswith('"'):
+        v = v[1:-1]
+    # Normaliza aspas duplas internas ("") para aspas simples (")
+    v = v.replace('""', '"')
+    return v.strip()
+
+
 def load_csv(path: str):
     with open(path, encoding="utf-8") as f:
         return list(csv.DictReader(f))
@@ -93,8 +106,8 @@ def to_consumidor(r: dict):
 def to_produto(r: dict):
     return Produto(
         id_produto=r["id_produto"],
-        nome_produto=r.get("nome_produto", "Sem nome"),
-        categoria_produto=r.get("categoria_produto", "outros"),
+        nome_produto=clean_str(r.get("nome_produto", "Sem nome")),
+        categoria_produto=clean_str(r.get("categoria_produto", "outros")) or "outros",
         peso_produto_gramas=parse_float(r.get("peso_produto_gramas", "")),
         comprimento_centimetros=parse_float(r.get("comprimento_centimetros", "")),
         altura_centimetros=parse_float(r.get("altura_centimetros", "")),
