@@ -1,0 +1,61 @@
+export const CATEGORY_IMAGES: Record<string, string> = {
+  perfumaria: 'https://upload.wikimedia.org/wikipedia/commons/7/79/Kuala_Lumpur_International_Airport%2C_Christian_Dior%2C_Dior_perfume%2C_Malaysia.jpg',
+  automotivo: 'https://upload.wikimedia.org/wikipedia/commons/9/9e/2025_Analogue_Automotive_VHPK_2.jpg',
+  cama_mesa_banho: 'https://upload.wikimedia.org/wikipedia/commons/e/e6/Carnival_Sensation_towel_snake.JPG',
+  utilidades_domesticas: 'https://upload.wikimedia.org/wikipedia/commons/8/8f/Kitchen_tools%2C_2012.jpg',
+  relogios_presentes: 'https://upload.wikimedia.org/wikipedia/commons/0/02/Rolex_Day-Date_Lacquered_Stella_Dial.jpg',
+  cool_stuff: 'https://upload.wikimedia.org/wikipedia/commons/c/c9/Rubik_cube_%28345056969%29.jpg',
+  consoles_games: 'https://upload.wikimedia.org/wikipedia/commons/0/0f/InclusiveGameLab_PS5-Controller_CC-BY-SA_01.jpg',
+  moveis_decoracao: 'https://upload.wikimedia.org/wikipedia/commons/f/f4/Furniture_exhibits_in_Masfurniture%2C_Hunsur_%283%29.jpg',
+  beleza_saude: 'https://upload.wikimedia.org/wikipedia/commons/5/5d/Skin_Care_Set.jpg',
+  fashion_calcados: 'https://upload.wikimedia.org/wikipedia/commons/5/5f/Pair_of_shoes%2C_silver_leather_wedges%2C_Prada%2C_Italy%2C_2005.jpg',
+  informatica_acessorios: 'https://upload.wikimedia.org/wikipedia/commons/1/17/Backlit_keyboard_2.jpg',
+  brinquedos: 'https://upload.wikimedia.org/wikipedia/commons/a/a8/Plushie_Toys_-_Blue_Magic.jpg',
+  pet_shop: 'https://upload.wikimedia.org/wikipedia/commons/f/fe/2026_Warszawa_CH_Arkadia%2C_sklep_zoologiczny%2C_dzia%C5%82_akwarystyczny%2C_1.jpg',
+  esporte_lazer: 'https://upload.wikimedia.org/wikipedia/commons/b/b0/Indoor_physical_exercise.jpg',
+  ferramentas_jardim: 'https://upload.wikimedia.org/wikipedia/commons/b/b8/Jardineiro_%2819273343536%29.jpg',
+  moveis_sala: 'https://upload.wikimedia.org/wikipedia/commons/2/2d/IKEA_store%2C_IKEA_living_room%2C_Rostov-on-Don%2C_Russia.jpg',
+  malas_acessorios: 'https://upload.wikimedia.org/wikipedia/commons/2/2d/Luggage_delivery_service_banner_Orange_suitcases.jpg',
+  casa_construcao: 'https://upload.wikimedia.org/wikipedia/commons/7/7f/Case_Backhoe_on_House_Contruction_Site.jpg',
+  moveis_cozinha_jantar_jardim: 'https://upload.wikimedia.org/wikipedia/commons/3/38/Heiligengrabe%2C_Kloster_Stift_zum_Heiligengrabe%2C_Abtei%2C_Speiseraum_--_2017_--_7082-8.jpg',
+  construcao_ferramentas: 'https://upload.wikimedia.org/wikipedia/commons/0/0a/DIY_means_choosing_the_right_tool_for_the_purpose_-_a_watchmaker%27s_nightmare.jpg',
+  moveis_quarto: 'https://upload.wikimedia.org/wikipedia/commons/6/6b/Hercules_Bedroom_at_Hanbury_Hall.jpg',
+  fashion_roupa_masculina: 'https://upload.wikimedia.org/wikipedia/commons/5/5a/Bow-tie-businessman-fashion-man_%2824217739102%29.jpg',
+  construcao_seguranca: 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Cologne_Germany_Industrial-work-with-Personal-Protective-Equipment-02.jpg',
+  fashion_bolsas_e_acessorios: 'https://upload.wikimedia.org/wikipedia/commons/7/74/HK_%E9%87%91%E9%90%98_Admiralty_%E5%A4%AA%E5%8F%A4%E5%BB%A3%E5%A0%B4_Pacific_Place_shopping_mall_shop_Gucci_Store_November_2022_Px3_01.jpg',
+  fraldas_higiene: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Wickeltisch_Drogerie_M%C3%BCller_%28Deggendorf%292.jpg',
+  telefonia: 'https://upload.wikimedia.org/wikipedia/commons/8/89/Smartphone_display_screen.jpg',
+  artigos_de_natal: 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Christmas_Tree_and_Presents.jpg',
+  papelaria: 'https://upload.wikimedia.org/wikipedia/commons/d/de/001_2019_12_03_Bueromaterial.jpg',
+  livros_interesse_geral: 'https://upload.wikimedia.org/wikipedia/commons/c/c2/Paris_75005_Quai_de_Montebello_Bouquinistes_20071014.jpg',
+  eletronicos: 'https://upload.wikimedia.org/wikipedia/commons/4/40/Cptvdisplay.jpg',
+  pc_gamer: 'https://upload.wikimedia.org/wikipedia/commons/7/78/Gaming_computers_%281%29.jpg',
+  bebes: 'https://upload.wikimedia.org/wikipedia/commons/7/74/Personalized_red_baby_long_johns_hanging_on_hangar_on_baby_crib_with_stuffed_elephant_and_chick_%2816807049549%29.png',
+  eletrodomesticos: 'https://upload.wikimedia.org/wikipedia/commons/2/25/Askemo_home_appliances.jpg',
+  alimentos: 'https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg',
+  instrumentos_musicais: 'https://upload.wikimedia.org/wikipedia/commons/6/60/Cascio_Interstate_Music_SuperStore_Acoustic_Guitar_Cabin.jpeg',
+  eletrodomesticos_2: 'https://upload.wikimedia.org/wikipedia/commons/5/5a/Coin-operated_washing_machines_in_Seven_Dials_Launderette_%26_Dry_Cleaners%2C_Brighton.jpg',
+  eletroportateis: 'https://upload.wikimedia.org/wikipedia/commons/c/c5/HK_WTS_%E8%81%AF%E5%90%88%E9%81%93_Junction_Road_%E6%A8%82%E5%AF%8C%E5%95%86%E5%A0%B4_Lok_Fu_Place_mall_shop_December_2020_SSG_40.jpg',
+  moveis_escritorio: 'https://upload.wikimedia.org/wikipedia/commons/a/a0/Wikimedia_Deutschland_Office_2024-03-15_3.jpg',
+  climatizacao: 'https://upload.wikimedia.org/wikipedia/commons/e/e5/Army_and_Air_Force_Exchange_Services_%28AAFES%29_is_gearing_up_for_a_hot_summer_in_Germany_by_having_numerous_portable_air_conditioners_on_sale_at_their_main_store_at_Ramstein_Air_Base_and_the_%28U_S_Army_Garrison_Rheinland-Pfalz_6205789%29.jpg',
+  pcs: 'https://upload.wikimedia.org/wikipedia/commons/6/63/Laptop-2411303_960_720.jpg',
+  fashion_roupa_feminina: 'https://upload.wikimedia.org/wikipedia/commons/4/4f/HK_TKO_%E5%B0%87%E8%BB%8D%E6%BE%B3_Tseung_Kwan_O_PopCorn_mall_shop_PIT_clothing_store_September_2021_SS2_03.jpg',
+  fashion_esporte: 'https://upload.wikimedia.org/wikipedia/commons/f/f3/Sports_store_in_New_York_with_Novak_%C4%90okovi%C4%87_equipments.JPG',
+  bebidas: 'https://upload.wikimedia.org/wikipedia/commons/5/57/Port_wine.jpg',
+  flores: 'https://upload.wikimedia.org/wikipedia/commons/6/67/JP_%E6%97%A5%E6%9C%AC_Japan_%E6%B2%96%E7%B9%A9_OKINAWA_Route_253_%E6%B5%A6%E8%A5%BF_Chome_AEON_Style_Department_Store_flowers_shop_yellow_n_pinkFebruary_2026_N13P_01.jpg',
+  artes: 'https://upload.wikimedia.org/wikipedia/commons/f/fb/Painting_the_Grand_canyon.jpg',
+  cine_foto: 'https://upload.wikimedia.org/wikipedia/commons/a/aa/Camera-vivitar.png',
+}
+
+export const DEFAULT_IMAGE =
+  'https://upload.wikimedia.org/wikipedia/commons/b/b4/Supermarket_z_flagami_%28ubt%29.JPG'
+
+export function getCategoryImage(categoria: string): string {
+  return CATEGORY_IMAGES[categoria.toLowerCase()] ?? DEFAULT_IMAGE
+}
+
+export function formatCategoria(categoria: string): string {
+  return categoria
+    .replace(/_/g, ' ')
+    .replace(/\b\w/g, (c) => c.toUpperCase())
+}

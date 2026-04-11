@@ -23,3 +23,10 @@ class ItemPedido(Base):
     __table_args__ = (
         PrimaryKeyConstraint("id_pedido", "id_item"),
     )
+
+    produto: Mapped["Produto"] = relationship(  # noqa: F821
+        "Produto", back_populates="itens_pedidos"
+    )
+    pedido: Mapped["Pedido"] = relationship(  # noqa: F821
+        "Pedido", back_populates="itens_pedidos"
+    )
