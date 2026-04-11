@@ -25,8 +25,8 @@ Sistema de Gerenciamento de E-Commerce para o Gerente da loja. Permite visualiza
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/rocketlab2026.git
-cd rocketlab2026
+git clone https://github.com/arbcaio/rocketlabproject.git
+cd rocketlabproject
 ```
 
 ---
