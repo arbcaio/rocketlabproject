@@ -80,7 +80,7 @@ export default function Layout({ children }: LayoutProps) {
 
       {/* Footer */}
       <footer className="border-t border-black py-4 text-center text-xs text-gray-500">
-        E-Commerce Manager © {new Date().getFullYear()}
+        Caio Braga © {new Date().getFullYear()}
       </footer>
     </div>
   )
