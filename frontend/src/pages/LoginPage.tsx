@@ -58,6 +58,13 @@ export default function LoginPage() {
           <p className="text-sm text-gray-500 mt-1">Faça login para continuar</p>
         </div>
 
+        {/* Credenciais provisórias */}
+        <div className="border border-black/20 bg-champagne-50 px-4 py-3 mb-4 text-xs text-gray-600">
+          <p className="font-semibold text-gray-700 mb-1">Acesso provisório</p>
+          <p>Usuário: <span className="font-mono font-semibold text-gray-900">rocket</span></p>
+          <p>Senha: <span className="font-mono font-semibold text-gray-900">equipeRocket@1</span></p>
+        </div>
+
         {/* Card de login */}
         <div className="card p-6">
           <form onSubmit={handleSubmit} className="space-y-4" noValidate>
