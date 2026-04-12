@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { ShoppingBag, Plus, BarChart3 } from 'lucide-react'
+import { Plus, BarChart3 } from 'lucide-react'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -9,28 +9,30 @@ export default function Layout({ children }: LayoutProps) {
   const location = useLocation()
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-champagne-100">
       {/* Navbar */}
-      <header className="sticky top-0 z-50 bg-gray-900/95 backdrop-blur border-b border-gray-800">
+      <header className="sticky top-0 z-50 bg-white border-b border-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link to="/produtos" className="flex items-center gap-3 group">
-              <div className="p-2 bg-brand-600 rounded-xl group-hover:bg-brand-500 transition-colors">
-                <ShoppingBag className="w-5 h-5 text-white" />
-              </div>
+              <img
+                src="/icon/OIP-1038731913.jpg"
+                alt="E-Commerce"
+                className="w-9 h-9 object-contain"
+              />
               <div>
-                <span className="text-lg font-bold text-white">E-Commerce</span>
-                <span className="text-xs text-gray-400 block -mt-1">Painel do Gerente</span>
+                <span className="text-lg font-bold text-gray-900 tracking-tight">E-Commerce</span>
+                <span className="text-xs text-gray-500 block -mt-1">Painel do Gerente</span>
               </div>
             </Link>
 
-            <nav className="flex items-center gap-2">
+            <nav className="flex items-center gap-1">
               <Link
                 to="/produtos"
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors
+                className={`flex items-center gap-2 px-3 py-2 text-sm font-medium border transition-colors
                   ${location.pathname === '/produtos'
-                    ? 'bg-brand-600 text-white'
-                    : 'text-gray-400 hover:text-white hover:bg-gray-800'
+                    ? 'bg-gray-900 text-white border-black'
+                    : 'bg-white text-gray-600 border-transparent hover:border-black hover:text-gray-900'
                   }`}
               >
                 <BarChart3 className="w-4 h-4" />
@@ -39,10 +41,10 @@ export default function Layout({ children }: LayoutProps) {
 
               <Link
                 to="/produtos/novo"
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors
+                className={`flex items-center gap-2 px-3 py-2 text-sm font-medium border transition-colors
                   ${location.pathname === '/produtos/novo'
-                    ? 'bg-brand-600 text-white'
-                    : 'text-gray-400 hover:text-white hover:bg-gray-800'
+                    ? 'bg-gray-900 text-white border-black'
+                    : 'bg-white text-gray-600 border-transparent hover:border-black hover:text-gray-900'
                   }`}
               >
                 <Plus className="w-4 h-4" />
@@ -59,7 +61,7 @@ export default function Layout({ children }: LayoutProps) {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-gray-800 py-4 text-center text-xs text-gray-600">
+      <footer className="border-t border-black py-4 text-center text-xs text-gray-500">
         E-Commerce Manager © {new Date().getFullYear()}
       </footer>
     </div>

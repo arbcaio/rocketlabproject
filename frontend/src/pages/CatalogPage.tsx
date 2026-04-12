@@ -55,11 +55,11 @@ export default function CatalogPage() {
     <div>
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-white">Catálogo de Produtos</h1>
-        <p className="text-gray-400 mt-1">
+        <h1 className="text-3xl font-bold text-gray-900">Catálogo de Produtos</h1>
+        <p className="text-gray-500 mt-1">
           {data ? (
             <>
-              <span className="text-white font-medium">{data.total}</span> produtos encontrados
+              <span className="text-gray-900 font-medium">{data.total}</span> produtos encontrados
             </>
           ) : (
             'Gerenciamento completo do seu estoque'
@@ -70,7 +70,7 @@ export default function CatalogPage() {
       {/* Search & Filter bar */}
       <div className="flex gap-3 mb-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input
             type="text"
             placeholder="Buscar produtos..."
@@ -81,7 +81,7 @@ export default function CatalogPage() {
           {search && (
             <button
               onClick={() => handleSearchChange('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700"
             >
               <X className="w-4 h-4" />
             </button>
@@ -90,17 +90,17 @@ export default function CatalogPage() {
 
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className={`btn-secondary relative ${categoria ? 'border-brand-500 text-brand-400' : ''}`}
+          className={`btn-secondary relative ${categoria ? 'bg-gray-900 text-white' : ''}`}
         >
           <Filter className="w-4 h-4" />
           <span className="hidden sm:inline">Categoria</span>
           {categoria && (
-            <span className="absolute -top-1 -right-1 w-2 h-2 bg-brand-500 rounded-full" />
+            <span className="absolute -top-1 -right-1 w-2 h-2 bg-black rounded-full" />
           )}
         </button>
 
         {hasFilters && (
-          <button onClick={clearFilters} className="btn-secondary text-red-400 border-red-900/50">
+          <button onClick={clearFilters} className="btn-secondary text-red-600">
             <X className="w-4 h-4" />
             <span className="hidden sm:inline">Limpar</span>
           </button>
@@ -110,13 +110,10 @@ export default function CatalogPage() {
       {/* Active category badge */}
       {categoria && (
         <div className="flex items-center gap-2 mb-4">
-          <span className="text-sm text-gray-400">Filtrando por:</span>
-          <span className="badge bg-brand-900/60 text-brand-300 border border-brand-700/50">
+          <span className="text-sm text-gray-500">Filtrando por:</span>
+          <span className="badge bg-gray-900 text-white border border-black">
             {formatCategoria(categoria)}
-            <button
-              onClick={() => setCategoria('')}
-              className="ml-1.5 hover:text-brand-100"
-            >
+            <button onClick={() => setCategoria('')} className="ml-1.5 hover:text-gray-300">
               <X className="w-3 h-3" />
             </button>
           </span>
@@ -125,15 +122,15 @@ export default function CatalogPage() {
 
       {/* Category panel */}
       {showFilters && (
-        <div className="card p-4 mb-4 animate-in fade-in slide-in-from-top-2">
-          <h3 className="text-sm font-semibold text-gray-300 mb-3">Selecionar Categoria</h3>
+        <div className="card p-4 mb-4">
+          <h3 className="text-sm font-semibold text-gray-700 mb-3">Selecionar Categoria</h3>
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => handleCategoryChange('')}
-              className={`badge cursor-pointer transition-colors ${
+              className={`badge cursor-pointer border transition-colors ${
                 !categoria
-                  ? 'bg-brand-700 text-brand-100'
-                  : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-gray-200'
+                  ? 'bg-gray-900 text-white border-black'
+                  : 'bg-white text-gray-600 border-black hover:bg-gray-900 hover:text-white'
               }`}
             >
               Todas
@@ -142,14 +139,14 @@ export default function CatalogPage() {
               <button
                 key={c.categoria}
                 onClick={() => handleCategoryChange(c.categoria)}
-                className={`badge cursor-pointer transition-colors ${
+                className={`badge cursor-pointer border transition-colors ${
                   categoria === c.categoria
-                    ? 'bg-brand-700 text-brand-100'
-                    : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-gray-200'
+                    ? 'bg-gray-900 text-white border-black'
+                    : 'bg-white text-gray-600 border-black hover:bg-gray-900 hover:text-white'
                 }`}
               >
                 {formatCategoria(c.categoria)}
-                <span className="ml-1.5 opacity-60">({c.total_produtos})</span>
+                <span className="ml-1.5 opacity-50">({c.total_produtos})</span>
               </button>
             ))}
           </div>
@@ -160,8 +157,8 @@ export default function CatalogPage() {
       {isLoading && (
         <div className="flex items-center justify-center py-24">
           <div className="flex flex-col items-center gap-3">
-            <Loader2 className="w-8 h-8 text-brand-500 animate-spin" />
-            <p className="text-gray-400">Carregando produtos...</p>
+            <Loader2 className="w-8 h-8 text-gray-700 animate-spin" />
+            <p className="text-gray-500">Carregando produtos...</p>
           </div>
         </div>
       )}
@@ -169,18 +166,18 @@ export default function CatalogPage() {
       {/* Error */}
       {isError && (
         <div className="card p-8 text-center">
-          <AlertCircle className="w-12 h-12 text-red-400 mx-auto mb-3" />
-          <h3 className="text-lg font-semibold text-white mb-1">Erro ao carregar produtos</h3>
-          <p className="text-gray-400 text-sm">Verifique se o backend está rodando na porta 8000.</p>
+          <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-3" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-1">Erro ao carregar produtos</h3>
+          <p className="text-gray-500 text-sm">Verifique se o backend está rodando na porta 8000.</p>
         </div>
       )}
 
       {/* Empty state */}
       {!isLoading && !isError && data?.items.length === 0 && (
         <div className="card p-12 text-center">
-          <Package className="w-16 h-16 text-gray-700 mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-gray-400 mb-2">Nenhum produto encontrado</h3>
-          <p className="text-gray-500 text-sm">
+          <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-gray-500 mb-2">Nenhum produto encontrado</h3>
+          <p className="text-gray-400 text-sm">
             {hasFilters ? 'Tente ajustar os filtros de busca.' : 'Comece adicionando produtos ao catálogo.'}
           </p>
         </div>

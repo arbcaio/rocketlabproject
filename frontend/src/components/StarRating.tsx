@@ -43,14 +43,14 @@ export default function StarRating({
                   ? 'text-amber-400 fill-amber-400'
                   : half
                   ? 'text-amber-400 fill-amber-200'
-                  : 'text-gray-600'
+                  : 'text-gray-300'
               }`}
             />
           )
         })}
       </div>
       {showValue && (
-        <span className={`${textSizeMap[size]} font-medium text-gray-300`}>
+        <span className={`${textSizeMap[size]} font-medium text-gray-600`}>
           {rating.toFixed(1)}
         </span>
       )}

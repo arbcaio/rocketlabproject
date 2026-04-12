@@ -43,10 +43,10 @@ export default function ProductCard({
   return (
     <Link
       to={`/produtos/${produto.id_produto}`}
-      className="card group hover:border-brand-600 transition-all hover:shadow-lg hover:shadow-brand-900/30 overflow-hidden flex flex-col"
+      className="card group hover:shadow-md transition-all overflow-hidden flex flex-col"
     >
       {/* Image */}
-      <div className="relative h-40 overflow-hidden bg-gray-800 flex-shrink-0">
+      <div className="relative h-40 overflow-hidden bg-champagne-200 flex-shrink-0">
         <img
           src={imgUrl}
           alt={produto.nome_produto}
@@ -57,8 +57,8 @@ export default function ProductCard({
               'https://upload.wikimedia.org/wikipedia/commons/b/b4/Supermarket_z_flagami_%28ubt%29.JPG'
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent" />
-        <span className="absolute bottom-2 left-2 badge bg-gray-900/80 text-gray-300 border border-gray-700 text-[10px]">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+        <span className="absolute bottom-2 left-2 badge bg-white/90 text-gray-800 border border-black text-[10px] font-semibold">
           <Tag className="w-2.5 h-2.5 mr-1" />
           {formatCategoria(produto.categoria_produto)}
         </span>
@@ -67,22 +67,22 @@ export default function ProductCard({
       {/* Content */}
       <div className="p-4 flex flex-col gap-2 flex-1">
         {/* Nome */}
-        <h3 className="font-semibold text-white leading-snug line-clamp-2 group-hover:text-brand-400 transition-colors text-sm">
+        <h3 className="font-semibold text-gray-900 leading-snug line-clamp-2 group-hover:text-gray-600 transition-colors text-sm">
           {produto.nome_produto}
         </h3>
 
-        {/* Legenda: dimensões físicas — principal diferenciador entre SKUs */}
+        {/* Legenda: dimensões físicas */}
         {(peso || dims) && (
           <div className="flex flex-wrap gap-x-3 gap-y-1">
             {peso && (
-              <span className="flex items-center gap-1 text-[11px] text-gray-400">
-                <Weight className="w-3 h-3 text-gray-600 flex-shrink-0" />
+              <span className="flex items-center gap-1 text-[11px] text-gray-500">
+                <Weight className="w-3 h-3 text-gray-400 flex-shrink-0" />
                 {peso}
               </span>
             )}
             {dims && (
-              <span className="flex items-center gap-1 text-[11px] text-gray-400">
-                <Ruler className="w-3 h-3 text-gray-600 flex-shrink-0" />
+              <span className="flex items-center gap-1 text-[11px] text-gray-500">
+                <Ruler className="w-3 h-3 text-gray-400 flex-shrink-0" />
                 {dims}
               </span>
             )}
@@ -95,9 +95,9 @@ export default function ProductCard({
         )}
 
         {/* Rodapé: vendas e avaliações */}
-        <div className="mt-auto flex items-center justify-between pt-2 border-t border-gray-800">
+        <div className="mt-auto flex items-center justify-between pt-2 border-t border-black/10">
           <div className="flex items-center gap-1 text-[11px] text-gray-500">
-            <TrendingUp className="w-3 h-3 text-green-500" />
+            <TrendingUp className="w-3 h-3 text-green-600" />
             <span>
               {totalVendas !== undefined
                 ? `${totalVendas.toLocaleString('pt-BR')} vendas`
@@ -106,7 +106,7 @@ export default function ProductCard({
           </div>
 
           <div className="flex items-center gap-1 text-[11px] text-gray-500">
-            <MessageSquare className="w-3 h-3 text-blue-500" />
+            <MessageSquare className="w-3 h-3 text-gray-400" />
             <span>
               {totalAvaliacoes !== undefined
                 ? `${totalAvaliacoes.toLocaleString('pt-BR')} aval.`

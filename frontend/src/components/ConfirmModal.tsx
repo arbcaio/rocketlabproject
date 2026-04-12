@@ -26,14 +26,14 @@ export default function ConfirmModal({
       />
 
       {/* Modal */}
-      <div className="relative card p-6 max-w-md w-full shadow-2xl">
+      <div className="relative card p-6 max-w-md w-full shadow-xl">
         <div className="flex items-start gap-4">
-          <div className="p-2 bg-red-900/40 rounded-xl">
-            <AlertTriangle className="w-6 h-6 text-red-400" />
+          <div className="p-2 bg-red-100 border border-red-300">
+            <AlertTriangle className="w-6 h-6 text-red-600" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-white">{title}</h3>
-            <p className="mt-1 text-sm text-gray-400">{message}</p>
+            <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+            <p className="mt-1 text-sm text-gray-500">{message}</p>
           </div>
         </div>
 
