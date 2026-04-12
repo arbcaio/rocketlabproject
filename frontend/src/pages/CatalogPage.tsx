@@ -19,7 +19,7 @@ const SORT_OPTIONS: { value: OrdenarPor; label: string; icon: React.ElementType 
 export default function CatalogPage() {
   const [search, setSearch] = useState('')
   const [debouncedSearch, setDebouncedSearch] = useState('')
-  const [categoria, setCategoria] = useState('')
+  const [categoriasSel, setCategoriasSel] = useState<string[]>([])
   const [ordenar, setOrdenar] = useState<OrdenarPor>('nome')
   const [page, setPage] = useState(1)
   const [showFilters, setShowFilters] = useState(false)
@@ -34,9 +34,9 @@ export default function CatalogPage() {
   }, [])
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['produtos', debouncedSearch, categoria, ordenar, page],
+    queryKey: ['produtos', debouncedSearch, categoriasSel, ordenar, page],
     queryFn: () =>
-      listProdutos({ search: debouncedSearch, categoria, ordenar, page, page_size: PAGE_SIZE }),
+      listProdutos({ search: debouncedSearch, categorias: categoriasSel, ordenar, page, page_size: PAGE_SIZE }),
   })
 
   const { data: categorias } = useQuery({
@@ -45,21 +45,22 @@ export default function CatalogPage() {
     staleTime: Infinity,
   })
 
-  const handleCategoryChange = (cat: string) => {
-    setCategoria(cat)
+  const toggleCategoria = (cat: string) => {
+    setCategoriasSel((prev) =>
+      prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]
+    )
     setPage(1)
-    setShowFilters(false)
   }
 
   const clearFilters = () => {
     setSearch('')
     setDebouncedSearch('')
-    setCategoria('')
+    setCategoriasSel([])
     setOrdenar('nome')
     setPage(1)
   }
 
-  const hasFilters = debouncedSearch || categoria || ordenar !== 'nome'
+  const hasFilters = debouncedSearch || categoriasSel.length > 0 || ordenar !== 'nome'
 
   return (
     <div>
@@ -100,12 +101,14 @@ export default function CatalogPage() {
 
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className={`btn-secondary relative ${categoria ? 'bg-gray-900 text-white' : ''}`}
+          className={`btn-secondary relative ${categoriasSel.length > 0 ? 'bg-gray-900 text-white' : ''}`}
         >
           <Filter className="w-4 h-4" />
           <span className="hidden sm:inline">Categoria</span>
-          {categoria && (
-            <span className="absolute -top-1 -right-1 w-2 h-2 bg-black rounded-full" />
+          {categoriasSel.length > 0 && (
+            <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-black text-white text-[10px] flex items-center justify-center font-bold">
+              {categoriasSel.length}
+            </span>
           )}
         </button>
 
@@ -139,48 +142,61 @@ export default function CatalogPage() {
         ))}
       </div>
 
-      {/* Active category badge */}
-      {categoria && (
-        <div className="flex items-center gap-2 mb-4">
+      {/* Active category badges */}
+      {categoriasSel.length > 0 && (
+        <div className="flex flex-wrap items-center gap-2 mb-4">
           <span className="text-sm text-gray-500">Filtrando por:</span>
-          <span className="badge bg-gray-900 text-white border border-black">
-            {formatCategoria(categoria)}
-            <button onClick={() => setCategoria('')} className="ml-1.5 hover:text-gray-300">
-              <X className="w-3 h-3" />
-            </button>
-          </span>
+          {categoriasSel.map((cat) => (
+            <span key={cat} className="badge bg-gray-900 text-white border border-black">
+              {formatCategoria(cat)}
+              <button onClick={() => toggleCategoria(cat)} className="ml-1.5 hover:text-gray-300">
+                <X className="w-3 h-3" />
+              </button>
+            </span>
+          ))}
         </div>
       )}
 
       {/* Category panel */}
       {showFilters && (
         <div className="card p-4 mb-4">
-          <h3 className="text-sm font-semibold text-gray-700 mb-3">Selecionar Categoria</h3>
-          <div className="flex flex-wrap gap-2">
-            <button
-              onClick={() => handleCategoryChange('')}
-              className={`badge cursor-pointer border transition-colors ${
-                !categoria
-                  ? 'bg-gray-900 text-white border-black'
-                  : 'bg-white text-gray-600 border-black hover:bg-gray-900 hover:text-white'
-              }`}
-            >
-              Todas
-            </button>
-            {categorias?.map((c) => (
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-gray-700">
+              Selecionar Categorias
+              {categoriasSel.length > 0 && (
+                <span className="ml-2 text-xs font-normal text-gray-500">
+                  ({categoriasSel.length} selecionada{categoriasSel.length > 1 ? 's' : ''})
+                </span>
+              )}
+            </h3>
+            {categoriasSel.length > 0 && (
               <button
-                key={c.categoria}
-                onClick={() => handleCategoryChange(c.categoria)}
-                className={`badge cursor-pointer border transition-colors ${
-                  categoria === c.categoria
-                    ? 'bg-gray-900 text-white border-black'
-                    : 'bg-white text-gray-600 border-black hover:bg-gray-900 hover:text-white'
-                }`}
+                onClick={() => { setCategoriasSel([]); setPage(1) }}
+                className="text-xs text-red-600 hover:text-red-800 transition-colors"
               >
-                {formatCategoria(c.categoria)}
-                <span className="ml-1.5 opacity-50">({c.total_produtos})</span>
+                Limpar seleção
               </button>
-            ))}
+            )}
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {categorias?.map((c) => {
+              const selected = categoriasSel.includes(c.categoria)
+              return (
+                <button
+                  key={c.categoria}
+                  onClick={() => toggleCategoria(c.categoria)}
+                  className={`badge cursor-pointer border transition-colors ${
+                    selected
+                      ? 'bg-gray-900 text-white border-black'
+                      : 'bg-white text-gray-600 border-black hover:bg-champagne-100'
+                  }`}
+                >
+                  {selected && <span className="mr-1">✓</span>}
+                  {formatCategoria(c.categoria)}
+                  <span className="ml-1.5 opacity-50">({c.total_produtos})</span>
+                </button>
+              )
+            })}
           </div>
         </div>
       )}

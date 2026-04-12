@@ -21,7 +21,7 @@ export type OrdenarPor = 'nome' | 'avaliacao' | 'vendas' | 'preco_asc' | 'preco_
 
 export interface ListProdutosParams {
   search?: string
-  categoria?: string
+  categorias?: string[]
   ordenar?: OrdenarPor
   page?: number
   page_size?: number
@@ -30,7 +30,12 @@ export interface ListProdutosParams {
 export async function listProdutos(
   params: ListProdutosParams = {}
 ): Promise<PaginatedResponse<Produto>> {
-  const { data } = await api.get<PaginatedResponse<Produto>>('/produtos', { params })
+  const { categorias, ...rest } = params
+  const queryParams: Record<string, unknown> = { ...rest }
+  if (categorias && categorias.length > 0) {
+    queryParams.categoria = categorias.join(',')
+  }
+  const { data } = await api.get<PaginatedResponse<Produto>>('/produtos', { params: queryParams })
   return data
 }
 

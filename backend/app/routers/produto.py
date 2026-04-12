@@ -134,7 +134,11 @@ def listar_produtos(
         )
 
     if categoria:
-        base = base.where(Produto.categoria_produto == categoria)
+        cats = [c.strip() for c in categoria.split(",") if c.strip()]
+        if len(cats) == 1:
+            base = base.where(Produto.categoria_produto == cats[0])
+        elif cats:
+            base = base.where(Produto.categoria_produto.in_(cats))
 
     total = db.scalar(select(func.count()).select_from(base.subquery()))
     pages = math.ceil(total / page_size) if total else 1
