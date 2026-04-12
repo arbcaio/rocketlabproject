@@ -9,6 +9,7 @@ export interface Produto {
   media_avaliacao: number | null
   total_avaliacoes: number
   total_vendas: number
+  preco_medio: number | null
 }
 
 export interface ProdutoDetalhe extends Produto {

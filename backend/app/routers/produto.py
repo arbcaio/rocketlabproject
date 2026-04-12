@@ -102,11 +102,12 @@ def listar_produtos(
         .subquery()
     )
 
-    # ── Subquery: total de vendas por produto ───────────────────────────────
+    # ── Subquery: total de vendas e preço médio por produto ─────────────────
     vendas_sub = (
         select(
             ItemPedido.id_produto.label("id_produto"),
             func.count(ItemPedido.id_item).label("total_vendas"),
+            func.avg(ItemPedido.preco_BRL).label("preco_medio"),
         )
         .group_by(ItemPedido.id_produto)
         .subquery()
@@ -119,6 +120,7 @@ def listar_produtos(
             aval_sub.c.media_aval,
             aval_sub.c.total_aval,
             vendas_sub.c.total_vendas,
+            vendas_sub.c.preco_medio,
         )
         .outerjoin(aval_sub, aval_sub.c.id_produto == Produto.id_produto)
         .outerjoin(vendas_sub, vendas_sub.c.id_produto == Produto.id_produto)
@@ -170,6 +172,7 @@ def listar_produtos(
             media_avaliacao=round(float(r.media_aval), 2) if r.media_aval else None,
             total_avaliacoes=r.total_aval or 0,
             total_vendas=r.total_vendas or 0,
+            preco_medio=round(float(r.preco_medio), 2) if r.preco_medio else None,
         )
         for r in rows
     ]

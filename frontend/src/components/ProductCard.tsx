@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { TrendingUp, MessageSquare, Tag, Weight, Ruler } from 'lucide-react'
+import { TrendingUp, MessageSquare, Tag, Weight, Ruler, DollarSign } from 'lucide-react'
 import type { Produto } from '../types'
 import { getCategoryImage, formatCategoria } from '../utils/categoryImages'
 import StarRating from './StarRating'
@@ -79,6 +79,16 @@ export default function ProductCard({ produto }: ProductCardProps) {
               </span>
             )}
           </div>
+        )}
+
+        {/* Preço médio */}
+        {produto.preco_medio !== null ? (
+          <div className="flex items-center gap-1 text-sm font-semibold text-gray-900">
+            <DollarSign className="w-3.5 h-3.5 text-gray-400" />
+            {`R$ ${produto.preco_medio.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+          </div>
+        ) : (
+          <span className="text-[11px] text-gray-400">Sem preço</span>
         )}
 
         {/* Avaliação por estrelas */}

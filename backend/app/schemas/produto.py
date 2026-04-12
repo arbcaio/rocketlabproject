@@ -36,6 +36,7 @@ class ProdutoResponse(ProdutoBase):
     media_avaliacao: Optional[float] = None
     total_avaliacoes: int = 0
     total_vendas: int = 0
+    preco_medio: Optional[float] = None
 
     model_config = {"from_attributes": True}
 
