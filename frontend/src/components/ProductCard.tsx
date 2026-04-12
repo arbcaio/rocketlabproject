@@ -6,9 +6,6 @@ import StarRating from './StarRating'
 
 interface ProductCardProps {
   produto: Produto
-  mediaAvaliacao?: number | null
-  totalAvaliacoes?: number
-  totalVendas?: number
 }
 
 function formatPeso(gramas: number | null): string | null {
@@ -26,12 +23,7 @@ function formatDimensoes(
   return `${c}×${a}×${l} cm`
 }
 
-export default function ProductCard({
-  produto,
-  mediaAvaliacao,
-  totalAvaliacoes,
-  totalVendas,
-}: ProductCardProps) {
+export default function ProductCard({ produto }: ProductCardProps) {
   const imgUrl = getCategoryImage(produto.categoria_produto)
   const peso = formatPeso(produto.peso_produto_gramas)
   const dims = formatDimensoes(
@@ -90,28 +82,22 @@ export default function ProductCard({
         )}
 
         {/* Avaliação por estrelas */}
-        {mediaAvaliacao !== undefined && mediaAvaliacao !== null && (
-          <StarRating rating={mediaAvaliacao} size="sm" />
+        {produto.media_avaliacao !== null ? (
+          <StarRating rating={produto.media_avaliacao} size="sm" />
+        ) : (
+          <span className="text-[11px] text-gray-400">Sem avaliações</span>
         )}
 
         {/* Rodapé: vendas e avaliações */}
         <div className="mt-auto flex items-center justify-between pt-2 border-t border-black/10">
           <div className="flex items-center gap-1 text-[11px] text-gray-500">
             <TrendingUp className="w-3 h-3 text-green-600" />
-            <span>
-              {totalVendas !== undefined
-                ? `${totalVendas.toLocaleString('pt-BR')} vendas`
-                : '– vendas'}
-            </span>
+            <span>{produto.total_vendas.toLocaleString('pt-BR')} vendas</span>
           </div>
 
           <div className="flex items-center gap-1 text-[11px] text-gray-500">
             <MessageSquare className="w-3 h-3 text-gray-400" />
-            <span>
-              {totalAvaliacoes !== undefined
-                ? `${totalAvaliacoes.toLocaleString('pt-BR')} aval.`
-                : '–'}
-            </span>
+            <span>{produto.total_avaliacoes.toLocaleString('pt-BR')} aval.</span>
           </div>
         </div>
       </div>

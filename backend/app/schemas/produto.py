@@ -33,6 +33,9 @@ class ProdutoUpdate(BaseModel):
 
 class ProdutoResponse(ProdutoBase):
     id_produto: str
+    media_avaliacao: Optional[float] = None
+    total_avaliacoes: int = 0
+    total_vendas: int = 0
 
     model_config = {"from_attributes": True}
 

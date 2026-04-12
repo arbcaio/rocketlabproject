@@ -6,6 +6,9 @@ export interface Produto {
   comprimento_centimetros: number | null
   altura_centimetros: number | null
   largura_centimetros: number | null
+  media_avaliacao: number | null
+  total_avaliacoes: number
+  total_vendas: number
 }
 
 export interface ProdutoDetalhe extends Produto {

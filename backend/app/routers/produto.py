@@ -112,24 +112,29 @@ def listar_produtos(
         .subquery()
     )
 
-    # ── Query principal com JOINs opcionais ─────────────────────────────────
-    query = (
-        select(Produto)
+    # ── Query base com stats ─────────────────────────────────────────────────
+    base = (
+        select(
+            Produto,
+            aval_sub.c.media_aval,
+            aval_sub.c.total_aval,
+            vendas_sub.c.total_vendas,
+        )
         .outerjoin(aval_sub, aval_sub.c.id_produto == Produto.id_produto)
         .outerjoin(vendas_sub, vendas_sub.c.id_produto == Produto.id_produto)
     )
 
     if search:
         termo = f"%{search.lower()}%"
-        query = query.where(
+        base = base.where(
             func.lower(Produto.nome_produto).like(termo)
             | func.lower(Produto.categoria_produto).like(termo)
         )
 
     if categoria:
-        query = query.where(Produto.categoria_produto == categoria)
+        base = base.where(Produto.categoria_produto == categoria)
 
-    total = db.scalar(select(func.count()).select_from(query.subquery()))
+    total = db.scalar(select(func.count()).select_from(base.subquery()))
     pages = math.ceil(total / page_size) if total else 1
 
     # ── Ordenação ────────────────────────────────────────────────────────────
@@ -147,11 +152,27 @@ def listar_produtos(
     else:
         order_clause = [Produto.nome_produto]
 
-    items = db.scalars(
-        query.order_by(*order_clause)
+    rows = db.execute(
+        base.order_by(*order_clause)
         .offset((page - 1) * page_size)
         .limit(page_size)
     ).all()
+
+    items = [
+        ProdutoResponse(
+            id_produto=r.Produto.id_produto,
+            nome_produto=r.Produto.nome_produto,
+            categoria_produto=r.Produto.categoria_produto,
+            peso_produto_gramas=r.Produto.peso_produto_gramas,
+            comprimento_centimetros=r.Produto.comprimento_centimetros,
+            altura_centimetros=r.Produto.altura_centimetros,
+            largura_centimetros=r.Produto.largura_centimetros,
+            media_avaliacao=round(float(r.media_aval), 2) if r.media_aval else None,
+            total_avaliacoes=r.total_aval or 0,
+            total_vendas=r.total_vendas or 0,
+        )
+        for r in rows
+    ]
 
     return PaginatedProdutos(
         items=items,
