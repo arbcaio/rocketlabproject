@@ -17,7 +17,7 @@ const api = axios.create({
 
 // ── Produtos ──────────────────────────────────────────────────────────────────
 
-export type OrdenarPor = 'nome' | 'avaliacao' | 'vendas'
+export type OrdenarPor = 'nome' | 'avaliacao' | 'vendas' | 'preco_asc' | 'preco_desc'
 
 export interface ListProdutosParams {
   search?: string

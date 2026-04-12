@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { Search, Filter, X, Package, AlertCircle, Loader2, ArrowUpDown, Star, TrendingUp } from 'lucide-react'
+import { Search, Filter, X, Package, AlertCircle, Loader2, ArrowUpDown, Star, TrendingUp, ArrowUp, ArrowDown } from 'lucide-react'
 import { listProdutos, getCategorias, type OrdenarPor } from '../api/produtos'
 import ProductCard from '../components/ProductCard'
 import Pagination from '../components/Pagination'
@@ -9,9 +9,11 @@ import { formatCategoria } from '../utils/categoryImages'
 const PAGE_SIZE = 20
 
 const SORT_OPTIONS: { value: OrdenarPor; label: string; icon: React.ElementType }[] = [
-  { value: 'nome',      label: 'Nome',     icon: ArrowUpDown },
-  { value: 'avaliacao', label: 'Avaliação', icon: Star },
-  { value: 'vendas',    label: 'Vendas',   icon: TrendingUp },
+  { value: 'nome',       label: 'Nome',          icon: ArrowUpDown },
+  { value: 'avaliacao',  label: 'Avaliação',      icon: Star },
+  { value: 'vendas',     label: 'Vendas',         icon: TrendingUp },
+  { value: 'preco_asc',  label: 'Menor preço',    icon: ArrowUp },
+  { value: 'preco_desc', label: 'Maior preço',    icon: ArrowDown },
 ]
 
 export default function CatalogPage() {

@@ -151,6 +151,16 @@ def listar_produtos(
             nulls_last(vendas_sub.c.total_vendas.desc()),
             Produto.nome_produto,
         ]
+    elif ordenar == "preco_asc":
+        order_clause = [
+            nulls_last(vendas_sub.c.preco_medio.asc()),
+            Produto.nome_produto,
+        ]
+    elif ordenar == "preco_desc":
+        order_clause = [
+            nulls_last(vendas_sub.c.preco_medio.desc()),
+            Produto.nome_produto,
+        ]
     else:
         order_clause = [Produto.nome_produto]
 
