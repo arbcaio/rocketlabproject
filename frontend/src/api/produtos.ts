@@ -17,9 +17,12 @@ const api = axios.create({
 
 // ── Produtos ──────────────────────────────────────────────────────────────────
 
+export type OrdenarPor = 'nome' | 'avaliacao' | 'vendas'
+
 export interface ListProdutosParams {
   search?: string
   categoria?: string
+  ordenar?: OrdenarPor
   page?: number
   page_size?: number
 }

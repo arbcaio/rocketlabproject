@@ -1,17 +1,24 @@
 import { useState, useCallback, useRef } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { Search, Filter, X, Package, AlertCircle, Loader2 } from 'lucide-react'
-import { listProdutos, getCategorias } from '../api/produtos'
+import { Search, Filter, X, Package, AlertCircle, Loader2, ArrowUpDown, Star, TrendingUp } from 'lucide-react'
+import { listProdutos, getCategorias, type OrdenarPor } from '../api/produtos'
 import ProductCard from '../components/ProductCard'
 import Pagination from '../components/Pagination'
 import { formatCategoria } from '../utils/categoryImages'
 
 const PAGE_SIZE = 20
 
+const SORT_OPTIONS: { value: OrdenarPor; label: string; icon: React.ElementType }[] = [
+  { value: 'nome',      label: 'Nome',     icon: ArrowUpDown },
+  { value: 'avaliacao', label: 'Avaliação', icon: Star },
+  { value: 'vendas',    label: 'Vendas',   icon: TrendingUp },
+]
+
 export default function CatalogPage() {
   const [search, setSearch] = useState('')
   const [debouncedSearch, setDebouncedSearch] = useState('')
   const [categoria, setCategoria] = useState('')
+  const [ordenar, setOrdenar] = useState<OrdenarPor>('nome')
   const [page, setPage] = useState(1)
   const [showFilters, setShowFilters] = useState(false)
   const debounceRef = useRef<ReturnType<typeof setTimeout>>()
@@ -25,9 +32,9 @@ export default function CatalogPage() {
   }, [])
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['produtos', debouncedSearch, categoria, page],
+    queryKey: ['produtos', debouncedSearch, categoria, ordenar, page],
     queryFn: () =>
-      listProdutos({ search: debouncedSearch, categoria, page, page_size: PAGE_SIZE }),
+      listProdutos({ search: debouncedSearch, categoria, ordenar, page, page_size: PAGE_SIZE }),
   })
 
   const { data: categorias } = useQuery({
@@ -46,10 +53,11 @@ export default function CatalogPage() {
     setSearch('')
     setDebouncedSearch('')
     setCategoria('')
+    setOrdenar('nome')
     setPage(1)
   }
 
-  const hasFilters = debouncedSearch || categoria
+  const hasFilters = debouncedSearch || categoria || ordenar !== 'nome'
 
   return (
     <div>
@@ -105,6 +113,28 @@ export default function CatalogPage() {
             <span className="hidden sm:inline">Limpar</span>
           </button>
         )}
+      </div>
+
+      {/* Sort bar */}
+      <div className="flex items-center gap-2 mb-4">
+        <span className="text-sm text-gray-500 flex items-center gap-1.5">
+          <ArrowUpDown className="w-3.5 h-3.5" />
+          Ordenar:
+        </span>
+        {SORT_OPTIONS.map(({ value, label, icon: Icon }) => (
+          <button
+            key={value}
+            onClick={() => { setOrdenar(value); setPage(1) }}
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium border transition-colors ${
+              ordenar === value
+                ? 'bg-gray-900 text-white border-black'
+                : 'bg-white text-gray-600 border-black hover:bg-champagne-100'
+            }`}
+          >
+            <Icon className="w-3.5 h-3.5" />
+            {label}
+          </button>
+        ))}
       </div>
 
       {/* Active category badge */}
