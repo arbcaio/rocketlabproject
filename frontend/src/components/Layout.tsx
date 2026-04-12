@@ -1,5 +1,6 @@
-import { Link, useLocation } from 'react-router-dom'
-import { Plus, BarChart3 } from 'lucide-react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Plus, BarChart3, LogOut } from 'lucide-react'
+import { useAuth } from '../context/AuthContext'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -7,6 +8,13 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const location = useLocation()
+  const navigate = useNavigate()
+  const { logout } = useAuth()
+
+  const handleLogout = () => {
+    logout()
+    navigate('/login', { replace: true })
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-champagne-100">
@@ -51,6 +59,16 @@ export default function Layout({ children }: LayoutProps) {
                 <span className="hidden sm:inline">Novo Produto</span>
               </Link>
             </nav>
+
+            {/* Logout */}
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-900 border border-transparent hover:border-black transition-colors"
+              title="Sair"
+            >
+              <LogOut className="w-4 h-4" />
+              <span className="hidden sm:inline">Sair</span>
+            </button>
           </div>
         </div>
       </header>
