@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Plus, BarChart3, LogOut } from 'lucide-react'
+import { Plus, BarChart3, LogOut, Sun, Moon } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
+import { useTheme } from '../context/ThemeContext'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -10,16 +11,20 @@ export default function Layout({ children }: LayoutProps) {
   const location = useLocation()
   const navigate = useNavigate()
   const { logout } = useAuth()
+  const { theme, toggleTheme } = useTheme()
 
   const handleLogout = () => {
     logout()
     navigate('/login', { replace: true })
   }
 
+  const navActive = 'bg-gray-900 text-white border-black dark:bg-gray-100 dark:text-gray-900 dark:border-gray-300'
+  const navIdle   = 'bg-white text-gray-600 border-transparent hover:border-black hover:text-gray-900 dark:bg-transparent dark:text-gray-300 dark:hover:border-gray-400 dark:hover:text-white'
+
   return (
-    <div className="min-h-screen flex flex-col bg-champagne-100">
+    <div className="min-h-screen flex flex-col bg-champagne-100 dark:bg-gray-900">
       {/* Navbar */}
-      <header className="sticky top-0 z-50 bg-white border-b border-black">
+      <header className="sticky top-0 z-50 bg-white border-b border-black dark:bg-gray-800 dark:border-gray-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link to="/produtos" className="flex items-center gap-3 group">
@@ -29,19 +34,17 @@ export default function Layout({ children }: LayoutProps) {
                 className="w-9 h-9 object-contain"
               />
               <div>
-                <span className="text-lg font-bold text-gray-900 tracking-tight">E-Commerce</span>
-                <span className="text-xs text-gray-500 block -mt-1">Painel do Gerente</span>
+                <span className="text-lg font-bold text-gray-900 tracking-tight dark:text-white">E-Commerce</span>
+                <span className="text-xs text-gray-500 block -mt-1 dark:text-gray-400">Painel do Gerente</span>
               </div>
             </Link>
 
             <nav className="flex items-center gap-1">
               <Link
                 to="/produtos"
-                className={`flex items-center gap-2 px-3 py-2 text-sm font-medium border transition-colors
-                  ${location.pathname === '/produtos'
-                    ? 'bg-gray-900 text-white border-black'
-                    : 'bg-white text-gray-600 border-transparent hover:border-black hover:text-gray-900'
-                  }`}
+                className={`flex items-center gap-2 px-3 py-2 text-sm font-medium border transition-colors ${
+                  location.pathname === '/produtos' ? navActive : navIdle
+                }`}
               >
                 <BarChart3 className="w-4 h-4" />
                 <span className="hidden sm:inline">Catálogo</span>
@@ -49,26 +52,35 @@ export default function Layout({ children }: LayoutProps) {
 
               <Link
                 to="/produtos/novo"
-                className={`flex items-center gap-2 px-3 py-2 text-sm font-medium border transition-colors
-                  ${location.pathname === '/produtos/novo'
-                    ? 'bg-gray-900 text-white border-black'
-                    : 'bg-white text-gray-600 border-transparent hover:border-black hover:text-gray-900'
-                  }`}
+                className={`flex items-center gap-2 px-3 py-2 text-sm font-medium border transition-colors ${
+                  location.pathname === '/produtos/novo' ? navActive : navIdle
+                }`}
               >
                 <Plus className="w-4 h-4" />
                 <span className="hidden sm:inline">Novo Produto</span>
               </Link>
             </nav>
 
-            {/* Logout */}
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-900 border border-transparent hover:border-black transition-colors"
-              title="Sair"
-            >
-              <LogOut className="w-4 h-4" />
-              <span className="hidden sm:inline">Sair</span>
-            </button>
+            <div className="flex items-center gap-1">
+              {/* Toggle tema */}
+              <button
+                onClick={toggleTheme}
+                className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-900 border border-transparent hover:border-black transition-colors dark:text-gray-400 dark:hover:text-white dark:hover:border-gray-500"
+                title={theme === 'dark' ? 'Modo claro' : 'Modo escuro'}
+              >
+                {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </button>
+
+              {/* Logout */}
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-900 border border-transparent hover:border-black transition-colors dark:text-gray-400 dark:hover:text-white dark:hover:border-gray-500"
+                title="Sair"
+              >
+                <LogOut className="w-4 h-4" />
+                <span className="hidden sm:inline">Sair</span>
+              </button>
+            </div>
           </div>
         </div>
       </header>
@@ -79,7 +91,7 @@ export default function Layout({ children }: LayoutProps) {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-black py-4 text-center text-xs text-gray-500">
+      <footer className="border-t border-black py-4 text-center text-xs text-gray-500 dark:border-gray-600 dark:text-gray-500">
         Caio Braga © {new Date().getFullYear()}
       </footer>
     </div>

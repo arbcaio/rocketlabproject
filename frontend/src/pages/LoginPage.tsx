@@ -39,12 +39,12 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-champagne-100 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-champagne-100 dark:bg-gray-900 flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
 
         {/* Logo / marca */}
         <div className="flex flex-col items-center mb-8">
-          <div className="w-16 h-16 border border-black bg-white flex items-center justify-center mb-4 overflow-hidden">
+          <div className="w-16 h-16 border border-black dark:border-gray-600 bg-white dark:bg-gray-800 flex items-center justify-center mb-4 overflow-hidden">
             <img
               src="/icon/OIP-1038731913.jpg"
               alt="E-Commerce"
@@ -54,15 +54,15 @@ export default function LoginPage() {
               }}
             />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">E-Commerce</h1>
-          <p className="text-sm text-gray-500 mt-1">Faça login para continuar</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">E-Commerce</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Faça login para continuar</p>
         </div>
 
         {/* Credenciais provisórias */}
-        <div className="border border-black/20 bg-champagne-50 px-4 py-3 mb-4 text-xs text-gray-600">
-          <p className="font-semibold text-gray-700 mb-1">Acesso provisório</p>
-          <p>Usuário: <span className="font-mono font-semibold text-gray-900">rocket</span></p>
-          <p>Senha: <span className="font-mono font-semibold text-gray-900">equipeRocket@1</span></p>
+        <div className="border border-black/20 dark:border-gray-600 bg-champagne-50 dark:bg-gray-800 px-4 py-3 mb-4 text-xs text-gray-600 dark:text-gray-400">
+          <p className="font-semibold text-gray-700 dark:text-gray-300 mb-1">Acesso provisório</p>
+          <p>Usuário: <span className="font-mono font-semibold text-gray-900 dark:text-white">rocket</span></p>
+          <p>Senha: <span className="font-mono font-semibold text-gray-900 dark:text-white">equipeRocket@1</span></p>
         </div>
 
         {/* Card de login */}
@@ -71,7 +71,7 @@ export default function LoginPage() {
 
             {/* Erro */}
             {error && (
-              <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-300 text-red-700 text-sm">
+              <div className="flex items-center gap-2 p-3 bg-red-50 dark:bg-red-900/30 border border-red-300 dark:border-red-700 text-red-700 dark:text-red-400 text-sm">
                 <AlertCircle className="w-4 h-4 flex-shrink-0" />
                 {error}
               </div>
@@ -79,7 +79,7 @@ export default function LoginPage() {
 
             {/* Usuário */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
                 Usuário
               </label>
               <input
@@ -99,7 +99,7 @@ export default function LoginPage() {
 
             {/* Senha */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
                 Senha
               </label>
               <div className="relative">
@@ -118,7 +118,7 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
-                  className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-gray-700 transition-colors"
+                  className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
                   tabIndex={-1}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -147,7 +147,7 @@ export default function LoginPage() {
           </form>
         </div>
 
-        <p className="text-center text-xs text-gray-400 mt-6">
+        <p className="text-center text-xs text-gray-400 dark:text-gray-500 mt-6">
           © {new Date().getFullYear()} E-Commerce Management
         </p>
       </div>

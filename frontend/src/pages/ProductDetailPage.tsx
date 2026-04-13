@@ -34,8 +34,8 @@ function StatCard({
         <Icon className={`w-5 h-5 ${colors[color].split(' ')[0]}`} />
       </div>
       <div>
-        <p className="text-xs text-gray-500">{label}</p>
-        <p className="text-lg font-bold text-gray-900">{value}</p>
+        <p className="text-xs text-gray-500 dark:text-gray-400">{label}</p>
+        <p className="text-lg font-bold text-gray-900 dark:text-white">{value}</p>
       </div>
     </div>
   )
@@ -47,7 +47,7 @@ function RatingBar({ star, count, total }: { star: number; count: number; total:
     <div className="flex items-center gap-2 text-sm">
       <span className="text-gray-500 w-4 text-right">{star}</span>
       <Star className="w-3 h-3 text-amber-400 fill-amber-400 flex-shrink-0" />
-      <div className="flex-1 bg-champagne-200 h-2">
+      <div className="flex-1 bg-champagne-200 dark:bg-gray-600 h-2">
         <div
           className="bg-amber-400 h-2 transition-all"
           style={{ width: `${pct}%` }}
@@ -155,12 +155,12 @@ export default function ProductDetailPage() {
             <div>
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <span className="badge bg-white/90 text-gray-800 border border-black mb-2">
+                  <span className="badge bg-white/90 dark:bg-gray-700 text-gray-800 dark:text-gray-200 border border-black dark:border-gray-500 mb-2">
                     <Tag className="w-3 h-3 mr-1" />
                     {formatCategoria(produto.categoria_produto)}
                   </span>
-                  <h1 className="text-2xl font-bold text-gray-900">{produto.nome_produto}</h1>
-                  <p className="text-xs text-gray-500 mt-1 font-mono">ID: {produto.id_produto}</p>
+                  <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{produto.nome_produto}</h1>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 font-mono">ID: {produto.id_produto}</p>
                 </div>
                 <div className="flex gap-2 flex-shrink-0">
                   <Link
@@ -194,20 +194,20 @@ export default function ProductDetailPage() {
 
             {/* Dimensions */}
             {(produto.peso_produto_gramas || produto.comprimento_centimetros) && (
-              <div className="mt-4 pt-4 border-t border-black/10">
-                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+              <div className="mt-4 pt-4 border-t border-black/10 dark:border-gray-600">
+                <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
                   Medidas
                 </h3>
                 <div className="flex flex-wrap gap-4 text-sm">
                   {produto.peso_produto_gramas && (
-                    <div className="flex items-center gap-1.5 text-gray-700">
-                      <Weight className="w-3.5 h-3.5 text-gray-400" />
+                    <div className="flex items-center gap-1.5 text-gray-700 dark:text-gray-300">
+                      <Weight className="w-3.5 h-3.5 text-gray-400 dark:text-gray-500" />
                       <span>{produto.peso_produto_gramas.toLocaleString('pt-BR')} g</span>
                     </div>
                   )}
                   {produto.comprimento_centimetros && (
-                    <div className="flex items-center gap-1.5 text-gray-700">
-                      <Ruler className="w-3.5 h-3.5 text-gray-400" />
+                    <div className="flex items-center gap-1.5 text-gray-700 dark:text-gray-300">
+                      <Ruler className="w-3.5 h-3.5 text-gray-400 dark:text-gray-500" />
                       <span>
                         {produto.comprimento_centimetros} × {produto.altura_centimetros} × {produto.largura_centimetros} cm
                       </span>
@@ -254,8 +254,8 @@ export default function ProductDetailPage() {
 
       {/* Reviews section */}
       <div className="card p-6">
-        <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-          <MessageSquare className="w-5 h-5 text-gray-600" />
+        <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+          <MessageSquare className="w-5 h-5 text-gray-600 dark:text-gray-400" />
           Avaliações dos Consumidores
         </h2>
 
@@ -266,12 +266,12 @@ export default function ProductDetailPage() {
         ) : avaliacoes && avaliacoes.total > 0 ? (
           <div className="grid md:grid-cols-3 gap-6">
             {/* Summary */}
-            <div className="flex flex-col items-center justify-center p-4 bg-champagne-100 border border-black/10">
-              <div className="text-5xl font-bold text-gray-900 mb-1">
+            <div className="flex flex-col items-center justify-center p-4 bg-champagne-100 dark:bg-gray-700 border border-black/10 dark:border-gray-600">
+              <div className="text-5xl font-bold text-gray-900 dark:text-white mb-1">
                 {avaliacoes.media_avaliacao?.toFixed(1) ?? '–'}
               </div>
               <StarRating rating={avaliacoes.media_avaliacao ?? null} size="md" showValue={false} />
-              <p className="text-gray-500 text-sm mt-2">{avaliacoes.total} avaliações</p>
+              <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">{avaliacoes.total} avaliações</p>
 
               {/* Distribution bars */}
               <div className="w-full mt-4 space-y-1.5">
@@ -284,20 +284,20 @@ export default function ProductDetailPage() {
             {/* List */}
             <div className="md:col-span-2 space-y-3">
               {avaliacoes.items.map((aval) => (
-                <div key={aval.id_avaliacao} className="bg-champagne-100 border border-black/10 p-4">
+                <div key={aval.id_avaliacao} className="bg-champagne-100 dark:bg-gray-700 border border-black/10 dark:border-gray-600 p-4">
                   <div className="flex items-center justify-between mb-2">
                     <StarRating rating={aval.avaliacao} size="sm" showValue={false} />
                     {aval.data_comentario && (
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
                         {new Date(aval.data_comentario).toLocaleDateString('pt-BR')}
                       </span>
                     )}
                   </div>
                   {aval.titulo_comentario && aval.titulo_comentario !== 'Sem título' && (
-                    <p className="font-medium text-gray-800 text-sm mb-1">{aval.titulo_comentario}</p>
+                    <p className="font-medium text-gray-800 dark:text-gray-200 text-sm mb-1">{aval.titulo_comentario}</p>
                   )}
                   {aval.comentario && aval.comentario !== 'Sem comentário' && (
-                    <p className="text-gray-600 text-sm">{aval.comentario}</p>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm">{aval.comentario}</p>
                   )}
                 </div>
               ))}
@@ -305,7 +305,7 @@ export default function ProductDetailPage() {
               {/* Avaliações pagination */}
               {avaliacoes.pages > 1 && (
                 <div className="flex items-center justify-between pt-2">
-                  <span className="text-sm text-gray-500">
+                  <span className="text-sm text-gray-500 dark:text-gray-400">
                     Página {avaliacoes.page} de {avaliacoes.pages}
                   </span>
                   <div className="flex gap-2">

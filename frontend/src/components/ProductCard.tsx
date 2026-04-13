@@ -38,7 +38,7 @@ export default function ProductCard({ produto }: ProductCardProps) {
       className="card group hover:shadow-md transition-all overflow-hidden flex flex-col"
     >
       {/* Image */}
-      <div className="relative h-40 overflow-hidden bg-champagne-200 flex-shrink-0">
+      <div className="relative h-40 overflow-hidden bg-champagne-200 dark:bg-gray-700 flex-shrink-0">
         <img
           src={imgUrl}
           alt={produto.nome_produto}
@@ -59,7 +59,7 @@ export default function ProductCard({ produto }: ProductCardProps) {
       {/* Content */}
       <div className="p-4 flex flex-col gap-2 flex-1">
         {/* Nome */}
-        <h3 className="font-semibold text-gray-900 leading-snug line-clamp-2 group-hover:text-gray-600 transition-colors text-sm">
+        <h3 className="font-semibold text-gray-900 dark:text-gray-100 leading-snug line-clamp-2 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors text-sm">
           {produto.nome_produto}
         </h3>
 
@@ -67,14 +67,14 @@ export default function ProductCard({ produto }: ProductCardProps) {
         {(peso || dims) && (
           <div className="flex flex-wrap gap-x-3 gap-y-1">
             {peso && (
-              <span className="flex items-center gap-1 text-[11px] text-gray-500">
-                <Weight className="w-3 h-3 text-gray-400 flex-shrink-0" />
+              <span className="flex items-center gap-1 text-[11px] text-gray-500 dark:text-gray-400">
+                <Weight className="w-3 h-3 text-gray-400 dark:text-gray-500 flex-shrink-0" />
                 {peso}
               </span>
             )}
             {dims && (
-              <span className="flex items-center gap-1 text-[11px] text-gray-500">
-                <Ruler className="w-3 h-3 text-gray-400 flex-shrink-0" />
+              <span className="flex items-center gap-1 text-[11px] text-gray-500 dark:text-gray-400">
+                <Ruler className="w-3 h-3 text-gray-400 dark:text-gray-500 flex-shrink-0" />
                 {dims}
               </span>
             )}
@@ -83,7 +83,7 @@ export default function ProductCard({ produto }: ProductCardProps) {
 
         {/* Preço médio */}
         {produto.preco_medio !== null ? (
-          <div className="flex items-center gap-1 text-sm font-semibold text-gray-900">
+          <div className="flex items-center gap-1 text-sm font-semibold text-gray-900 dark:text-gray-100">
             <DollarSign className="w-3.5 h-3.5 text-gray-400" />
             {`R$ ${produto.preco_medio.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
           </div>
@@ -99,14 +99,14 @@ export default function ProductCard({ produto }: ProductCardProps) {
         )}
 
         {/* Rodapé: vendas e avaliações */}
-        <div className="mt-auto flex items-center justify-between pt-2 border-t border-black/10">
-          <div className="flex items-center gap-1 text-[11px] text-gray-500">
-            <TrendingUp className="w-3 h-3 text-green-600" />
+        <div className="mt-auto flex items-center justify-between pt-2 border-t border-black/10 dark:border-gray-600">
+          <div className="flex items-center gap-1 text-[11px] text-gray-500 dark:text-gray-400">
+            <TrendingUp className="w-3 h-3 text-green-600 dark:text-green-500" />
             <span>{produto.total_vendas.toLocaleString('pt-BR')} vendas</span>
           </div>
 
-          <div className="flex items-center gap-1 text-[11px] text-gray-500">
-            <MessageSquare className="w-3 h-3 text-gray-400" />
+          <div className="flex items-center gap-1 text-[11px] text-gray-500 dark:text-gray-400">
+            <MessageSquare className="w-3 h-3 text-gray-400 dark:text-gray-500" />
             <span>{produto.total_avaliacoes.toLocaleString('pt-BR')} aval.</span>
           </div>
         </div>

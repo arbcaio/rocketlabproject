@@ -140,10 +140,10 @@ export default function ProductFormPage() {
           <Package className="w-5 h-5 text-white" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
             {isEditing ? 'Editar Produto' : 'Novo Produto'}
           </h1>
-          <p className="text-gray-500 text-sm">
+          <p className="text-gray-500 dark:text-gray-400 text-sm">
             {isEditing ? `Editando: ${produto?.nome_produto}` : 'Preencha as informações do produto'}
           </p>
         </div>
@@ -163,7 +163,7 @@ export default function ProductFormPage() {
       <form onSubmit={handleSubmit} className="card p-6 space-y-5">
         {/* Nome */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
             Nome do Produto <span className="text-red-500">*</span>
           </label>
           <input
@@ -180,7 +180,7 @@ export default function ProductFormPage() {
 
         {/* Categoria */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
             Categoria <span className="text-red-500">*</span>
           </label>
           {categorias && categorias.length > 0 ? (
@@ -213,13 +213,13 @@ export default function ProductFormPage() {
 
         {/* Divider */}
         <div className="border-t border-black/10 pt-4">
-          <h3 className="text-sm font-semibold text-gray-500 mb-4 uppercase tracking-wider">
+          <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-4 uppercase tracking-wider">
             Dimensões (opcional)
           </h3>
           <div className="grid grid-cols-2 gap-4">
             {/* Peso */}
             <div>
-              <label className="block text-xs font-medium text-gray-500 mb-1">
+              <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">
                 Peso (gramas)
               </label>
               <input
@@ -235,7 +235,7 @@ export default function ProductFormPage() {
 
             {/* Comprimento */}
             <div>
-              <label className="block text-xs font-medium text-gray-500 mb-1">
+              <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">
                 Comprimento (cm)
               </label>
               <input
@@ -251,7 +251,7 @@ export default function ProductFormPage() {
 
             {/* Altura */}
             <div>
-              <label className="block text-xs font-medium text-gray-500 mb-1">
+              <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">
                 Altura (cm)
               </label>
               <input
@@ -267,7 +267,7 @@ export default function ProductFormPage() {
 
             {/* Largura */}
             <div>
-              <label className="block text-xs font-medium text-gray-500 mb-1">
+              <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">
                 Largura (cm)
               </label>
               <input

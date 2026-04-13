@@ -66,11 +66,11 @@ export default function CatalogPage() {
     <div>
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900">Catálogo de Produtos</h1>
-        <p className="text-gray-500 mt-1">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Catálogo de Produtos</h1>
+        <p className="text-gray-500 dark:text-gray-400 mt-1">
           {data ? (
             <>
-              <span className="text-gray-900 font-medium">{data.total}</span> produtos encontrados
+              <span className="text-gray-900 dark:text-white font-medium">{data.total}</span> produtos encontrados
             </>
           ) : (
             'Gerenciamento completo do seu estoque'
@@ -121,8 +121,8 @@ export default function CatalogPage() {
       </div>
 
       {/* Sort bar */}
-      <div className="flex items-center gap-2 mb-4">
-        <span className="text-sm text-gray-500 flex items-center gap-1.5">
+      <div className="flex flex-wrap items-center gap-2 mb-4">
+        <span className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
           <ArrowUpDown className="w-3.5 h-3.5" />
           Ordenar:
         </span>
@@ -132,8 +132,8 @@ export default function CatalogPage() {
             onClick={() => { setOrdenar(value); setPage(1) }}
             className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium border transition-colors ${
               ordenar === value
-                ? 'bg-gray-900 text-white border-black'
-                : 'bg-white text-gray-600 border-black hover:bg-champagne-100'
+                ? 'bg-gray-900 text-white border-black dark:bg-gray-100 dark:text-gray-900 dark:border-gray-300'
+                : 'bg-white text-gray-600 border-black hover:bg-champagne-100 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:bg-gray-600'
             }`}
           >
             <Icon className="w-3.5 h-3.5" />
@@ -161,10 +161,10 @@ export default function CatalogPage() {
       {showFilters && (
         <div className="card p-4 mb-4">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm font-semibold text-gray-700">
+            <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
               Selecionar Categorias
               {categoriasSel.length > 0 && (
-                <span className="ml-2 text-xs font-normal text-gray-500">
+                <span className="ml-2 text-xs font-normal text-gray-500 dark:text-gray-400">
                   ({categoriasSel.length} selecionada{categoriasSel.length > 1 ? 's' : ''})
                 </span>
               )}
@@ -172,7 +172,7 @@ export default function CatalogPage() {
             {categoriasSel.length > 0 && (
               <button
                 onClick={() => { setCategoriasSel([]); setPage(1) }}
-                className="text-xs text-red-600 hover:text-red-800 transition-colors"
+                className="text-xs text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 transition-colors"
               >
                 Limpar seleção
               </button>
@@ -187,8 +187,8 @@ export default function CatalogPage() {
                   onClick={() => toggleCategoria(c.categoria)}
                   className={`badge cursor-pointer border transition-colors ${
                     selected
-                      ? 'bg-gray-900 text-white border-black'
-                      : 'bg-white text-gray-600 border-black hover:bg-champagne-100'
+                      ? 'bg-gray-900 text-white border-black dark:bg-gray-100 dark:text-gray-900 dark:border-gray-300'
+                      : 'bg-white text-gray-600 border-black hover:bg-champagne-100 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:bg-gray-600'
                   }`}
                 >
                   {selected && <span className="mr-1">✓</span>}
@@ -216,7 +216,7 @@ export default function CatalogPage() {
         <div className="card p-8 text-center">
           <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-3" />
           <h3 className="text-lg font-semibold text-gray-900 mb-1">Erro ao carregar produtos</h3>
-          <p className="text-gray-500 text-sm">Verifique se o backend está rodando na porta 8000.</p>
+          <p className="text-gray-500 dark:text-gray-400 text-sm">Verifique se o backend está rodando na porta 8000.</p>
         </div>
       )}
 
@@ -224,8 +224,8 @@ export default function CatalogPage() {
       {!isLoading && !isError && data?.items.length === 0 && (
         <div className="card p-12 text-center">
           <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-gray-500 mb-2">Nenhum produto encontrado</h3>
-          <p className="text-gray-400 text-sm">
+          <h3 className="text-xl font-semibold text-gray-500 dark:text-gray-400 mb-2">Nenhum produto encontrado</h3>
+          <p className="text-gray-400 dark:text-gray-500 text-sm">
             {hasFilters ? 'Tente ajustar os filtros de busca.' : 'Comece adicionando produtos ao catálogo.'}
           </p>
         </div>
