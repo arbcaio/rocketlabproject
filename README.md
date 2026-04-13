@@ -1,108 +1,53 @@
-# E-Commerce Manager 🛒
+# E-Commerce Manager
 
-Sistema de Gerenciamento de E-Commerce para o Gerente da loja. Permite visualizar o catálogo de produtos, acompanhar desempenho de vendas e avaliações, e gerenciar produtos individualmente.
+Sistema de gerenciamento de e-commerce: catálogo de produtos, vendas, consumidores, vendedores e pedidos.
 
-## Stack
-
-| Camada | Tecnologia |
-|--------|-----------|
-| Frontend | Vite + React + TypeScript + Tailwind CSS |
-| Backend | FastAPI (Python) |
-| Banco de Dados | SQLite (via SQLAlchemy + Alembic) |
+**Stack:** React + TypeScript + Vite (frontend) · FastAPI + SQLite + SQLAlchemy (backend)
 
 ---
 
 ## Pré-requisitos
 
-- **Python 3.11+**
-- **Node.js 18+** e **npm**
-- **Git**
+- Python 3.11+
+- Node.js 18+
 
 ---
 
-## Como executar
+## Executando o projeto
 
-### 1. Clone o repositório
-
-```bash
-git clone https://github.com/arbcaio/rocketlabproject.git
-cd rocketlabproject
-```
-
----
-
-### 2. Backend
+### Backend
 
 ```bash
 cd backend
-```
 
-#### 2.1 Crie e ative o ambiente virtual
-
-```bash
-# Windows
+# Ambiente virtual
 python -m venv .venv
-.venv\Scripts\activate
+.venv\Scripts\activate        # Windows
+source .venv/bin/activate     # Mac/Linux
 
-# Linux / macOS
-python -m venv .venv
-source .venv/bin/activate
-```
-
-#### 2.2 Instale as dependências
-
-```bash
+# Dependências
 pip install -r requirements.txt
-```
 
-#### 2.3 Configure o arquivo de ambiente
-
-```bash
+# Banco de dados
 cp .env.example .env
-# O padrão já usa SQLite local, nenhuma alteração necessária
-```
-
-#### 2.4 Aplique as migrações do banco de dados
-
-```bash
 alembic upgrade head
-```
 
-#### 2.5 Popule o banco com os dados CSV
+# Popular com dados CSV
+python seed.py --csv-dir "caminho/para/csvs"
 
-```bash
-# Informe o caminho para a pasta com os arquivos CSV
-python seed.py --csv-dir "C:\caminho\para\sua\pasta\csvs"
-
-# Exemplo (Windows)
-python seed.py --csv-dir "C:\Users\seu-usuario\Downloads\arquivos atividade visagio"
-
-# Exemplo (Linux/macOS)
-python seed.py --csv-dir ~/Downloads/csvs
-```
-
-Os arquivos CSV esperados são:
-- `dim_consumidores.csv`
-- `dim_produtos.csv`
-- `dim_vendedores.csv`
-- `fat_pedidos.csv`
-- `fat_itens_pedidos.csv`
-- `fat_avaliacoes_pedidos.csv`
-
-#### 2.6 Inicie o servidor
-
-```bash
+# Iniciar
 python -m uvicorn app.main:app --reload --port 8000
 ```
 
-A API ficará disponível em: http://localhost:8000  
-Documentação interativa (Swagger): http://localhost:8000/docs
+API: `http://localhost:8000` · Swagger: `http://localhost:8000/docs`
+
+**Arquivos CSV esperados:** `dim_consumidores.csv`, `dim_produtos.csv`, `dim_vendedores.csv`, `fat_pedidos.csv`, `fat_itens_pedidos.csv`, `fat_avaliacoes_pedidos.csv`
 
 ---
 
-### 3. Frontend
+### Frontend
 
-Em um **novo terminal**:
+Em um novo terminal:
 
 ```bash
 cd frontend
@@ -110,66 +55,67 @@ npm install
 npm run dev
 ```
 
-O frontend ficará disponível em: http://localhost:5173
+App: `http://localhost:5173` (o backend precisa estar rodando na porta 8000)
 
 ---
 
-## Funcionalidades
+## Login
 
-### Catálogo de Produtos
-- Listagem em grade com imagens por categoria
-- Busca em tempo real por nome ou categoria
-- Filtro por categoria com contagem de produtos
-- Paginação com 20 itens por página
-
-### Detalhes do Produto
-- Informações completas (dimensões, peso)
-- **Métricas de desempenho**: total de vendas, receita total, preço médio
-- **Avaliações**: média com estrelas, distribuição por nota, lista paginada
-
-### Gerenciamento de Produtos
-- **Criar** novos produtos com formulário validado
-- **Editar** produtos existentes (campos opcionais)
-- **Remover** produto com confirmação modal
+| Usuário  | Senha            |
+|----------|------------------|
+| `rocket` | `equipeRocket@1` |
 
 ---
 
-## Endpoints da API
+## Testes
 
-| Método | Rota | Descrição |
-|--------|------|-----------|
-| `GET` | `/produtos` | Lista produtos (busca, categoria, paginação) |
-| `GET` | `/produtos/categorias` | Lista todas as categorias |
-| `GET` | `/produtos/{id}` | Detalhes com stats de vendas e avaliações |
-| `POST` | `/produtos` | Cria novo produto |
-| `PUT` | `/produtos/{id}` | Atualiza produto |
-| `DELETE` | `/produtos/{id}` | Remove produto |
-| `GET` | `/produtos/{id}/avaliacoes` | Lista avaliações paginadas |
+```bash
+# Backend (148 testes)
+cd backend
+pytest -v
+
+# Frontend (99 testes)
+cd frontend
+npm test
+```
 
 ---
 
-## Estrutura do Projeto
+## Estrutura do repositório
 
 ```
 rocketlab2026/
 ├── backend/
-│   ├── alembic/              # Migrações do banco de dados
 │   ├── app/
-│   │   ├── models/           # Modelos SQLAlchemy
-│   │   ├── schemas/          # Schemas Pydantic
-│   │   ├── routers/          # Rotas FastAPI
-│   │   ├── config.py
+│   │   ├── models/      # Modelos SQLAlchemy
+│   │   ├── schemas/     # Schemas Pydantic
+│   │   ├── routers/     # Rotas FastAPI
 │   │   ├── database.py
 │   │   └── main.py
-│   ├── seed.py               # Script de população do banco
+│   ├── alembic/         # Migrações do banco
+│   ├── tests/           # Testes de integração
+│   ├── seed.py          # Importação dos CSVs
 │   └── requirements.txt
 └── frontend/
     ├── src/
-    │   ├── api/              # Camada de comunicação com o backend
-    │   ├── components/       # Componentes reutilizáveis
-    │   ├── pages/            # Páginas da aplicação
-    │   ├── types/            # Tipos TypeScript
-    │   └── utils/            # Utilitários (imagens por categoria, etc.)
+    │   ├── api/         # Chamadas ao backend
+    │   ├── components/  # Componentes reutilizáveis
+    │   ├── context/     # AuthContext, ThemeContext
+    │   ├── pages/       # CatalogPage, LoginPage, etc.
+    │   └── utils/
     ├── package.json
     └── vite.config.ts
 ```
+
+---
+
+## Endpoints principais
+
+| Recurso      | Rota              |
+|--------------|-------------------|
+| Produtos     | `/produtos`       |
+| Consumidores | `/consumidores`   |
+| Vendedores   | `/vendedores`     |
+| Pedidos      | `/pedidos`        |
+
+Todos suportam paginação via `?page=1&page_size=20`. Documentação completa em `/docs`.
