@@ -20,24 +20,15 @@ Sistema de gerenciamento de e-commerce: catálogo de produtos, vendas, consumido
 ```bash
 cd backend
 
-# Ambiente virtual
-python -m venv .venv
-.venv\Scripts\activate        # Windows
-source .venv/bin/activate     # Mac/Linux
-
 # Dependências
 pip install -r requirements.txt
 
 # Banco de dados
-cp .env.example .env
 alembic upgrade head
 
 # Popular com dados CSV
 # Os CSVs devem estar em rocketlab2026/files/ (buscado automaticamente)
 python seed.py
-
-# Caso os arquivos estejam em outro local:
-python seed.py --csv-dir "caminho/para/csvs"
 
 # Iniciar
 python -m uvicorn app.main:app --reload --port 8000
@@ -114,14 +105,3 @@ rocketlab2026/
 ```
 
 ---
-
-## Endpoints principais
-
-| Recurso      | Rota              |
-|--------------|-------------------|
-| Produtos     | `/produtos`       |
-| Consumidores | `/consumidores`   |
-| Vendedores   | `/vendedores`     |
-| Pedidos      | `/pedidos`        |
-
-Todos suportam paginação via `?page=1&page_size=20`. Documentação completa em `/docs`.
