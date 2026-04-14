@@ -23,19 +23,19 @@ function StatCard({
   color?: string
 }) {
   const colors: Record<string, string> = {
-    blue: 'text-blue-400 bg-blue-900/30',
-    green: 'text-green-400 bg-green-900/30',
-    amber: 'text-amber-400 bg-amber-900/30',
-    purple: 'text-purple-400 bg-purple-900/30',
+    blue: 'text-blue-600 bg-blue-50 border border-blue-200',
+    green: 'text-green-600 bg-green-50 border border-green-200',
+    amber: 'text-amber-600 bg-amber-50 border border-amber-200',
+    purple: 'text-purple-600 bg-purple-50 border border-purple-200',
   }
   return (
     <div className="card p-4 flex items-center gap-4">
-      <div className={`p-2.5 rounded-xl ${colors[color]}`}>
+      <div className={`p-2.5 ${colors[color]}`}>
         <Icon className={`w-5 h-5 ${colors[color].split(' ')[0]}`} />
       </div>
       <div>
-        <p className="text-xs text-gray-400">{label}</p>
-        <p className="text-lg font-bold text-white">{value}</p>
+        <p className="text-xs text-gray-500 dark:text-gray-400">{label}</p>
+        <p className="text-lg font-bold text-gray-900 dark:text-white">{value}</p>
       </div>
     </div>
   )
@@ -45,15 +45,15 @@ function RatingBar({ star, count, total }: { star: number; count: number; total:
   const pct = total > 0 ? (count / total) * 100 : 0
   return (
     <div className="flex items-center gap-2 text-sm">
-      <span className="text-gray-400 w-4 text-right">{star}</span>
+      <span className="text-gray-500 w-4 text-right">{star}</span>
       <Star className="w-3 h-3 text-amber-400 fill-amber-400 flex-shrink-0" />
-      <div className="flex-1 bg-gray-800 rounded-full h-2">
+      <div className="flex-1 bg-champagne-200 dark:bg-gray-600 h-2">
         <div
-          className="bg-amber-400 h-2 rounded-full transition-all"
+          className="bg-amber-400 h-2 transition-all"
           style={{ width: `${pct}%` }}
         />
       </div>
-      <span className="text-gray-400 w-8 text-right">{count}</span>
+      <span className="text-gray-500 w-8 text-right">{count}</span>
     </div>
   )
 }
@@ -94,7 +94,7 @@ export default function ProductDetailPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <Loader2 className="w-8 h-8 text-brand-500 animate-spin" />
+        <Loader2 className="w-8 h-8 text-gray-700 animate-spin" />
       </div>
     )
   }
@@ -102,8 +102,8 @@ export default function ProductDetailPage() {
   if (isError || !produto) {
     return (
       <div className="card p-8 text-center max-w-md mx-auto mt-12">
-        <AlertCircle className="w-12 h-12 text-red-400 mx-auto mb-3" />
-        <h3 className="text-lg font-semibold text-white">Produto não encontrado</h3>
+        <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-3" />
+        <h3 className="text-lg font-semibold text-gray-900">Produto não encontrado</h3>
         <Link to="/produtos" className="btn-primary mt-4">
           Voltar ao catálogo
         </Link>
@@ -127,7 +127,7 @@ export default function ProductDetailPage() {
       {/* Back */}
       <button
         onClick={() => navigate(-1)}
-        className="flex items-center gap-1.5 text-gray-400 hover:text-white mb-6 transition-colors"
+        className="flex items-center gap-1.5 text-gray-500 hover:text-gray-900 mb-6 transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
         Voltar
@@ -147,7 +147,7 @@ export default function ProductDetailPage() {
                   'https://upload.wikimedia.org/wikipedia/commons/b/b4/Supermarket_z_flagami_%28ubt%29.JPG'
               }}
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent to-gray-900/40 hidden md:block" />
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/10 hidden md:block" />
           </div>
 
           {/* Info */}
@@ -155,12 +155,12 @@ export default function ProductDetailPage() {
             <div>
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <span className="badge bg-brand-900/60 text-brand-300 border border-brand-700/50 mb-2">
+                  <span className="badge bg-white/90 dark:bg-gray-700 text-gray-800 dark:text-gray-200 border border-black dark:border-gray-500 mb-2">
                     <Tag className="w-3 h-3 mr-1" />
                     {formatCategoria(produto.categoria_produto)}
                   </span>
-                  <h1 className="text-2xl font-bold text-white">{produto.nome_produto}</h1>
-                  <p className="text-xs text-gray-600 mt-1 font-mono">ID: {produto.id_produto}</p>
+                  <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{produto.nome_produto}</h1>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 font-mono">ID: {produto.id_produto}</p>
                 </div>
                 <div className="flex gap-2 flex-shrink-0">
                   <Link
@@ -187,27 +187,27 @@ export default function ProductDetailPage() {
                   size="lg"
                 />
                 <p className="text-sm text-gray-500 mt-1">
-                  {produto.total_avaliacoes} avaliações
-                </p>
+                {produto.total_avaliacoes} avaliações
+              </p>
               </div>
             </div>
 
             {/* Dimensions */}
             {(produto.peso_produto_gramas || produto.comprimento_centimetros) && (
-              <div className="mt-4 pt-4 border-t border-gray-800">
-                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+              <div className="mt-4 pt-4 border-t border-black/10 dark:border-gray-600">
+                <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
                   Medidas
                 </h3>
                 <div className="flex flex-wrap gap-4 text-sm">
                   {produto.peso_produto_gramas && (
-                    <div className="flex items-center gap-1.5 text-gray-300">
-                      <Weight className="w-3.5 h-3.5 text-gray-500" />
+                    <div className="flex items-center gap-1.5 text-gray-700 dark:text-gray-300">
+                      <Weight className="w-3.5 h-3.5 text-gray-400 dark:text-gray-500" />
                       <span>{produto.peso_produto_gramas.toLocaleString('pt-BR')} g</span>
                     </div>
                   )}
                   {produto.comprimento_centimetros && (
-                    <div className="flex items-center gap-1.5 text-gray-300">
-                      <Ruler className="w-3.5 h-3.5 text-gray-500" />
+                    <div className="flex items-center gap-1.5 text-gray-700 dark:text-gray-300">
+                      <Ruler className="w-3.5 h-3.5 text-gray-400 dark:text-gray-500" />
                       <span>
                         {produto.comprimento_centimetros} × {produto.altura_centimetros} × {produto.largura_centimetros} cm
                       </span>
@@ -254,24 +254,24 @@ export default function ProductDetailPage() {
 
       {/* Reviews section */}
       <div className="card p-6">
-        <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-          <MessageSquare className="w-5 h-5 text-brand-400" />
+        <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+          <MessageSquare className="w-5 h-5 text-gray-600 dark:text-gray-400" />
           Avaliações dos Consumidores
         </h2>
 
         {loadingAval ? (
           <div className="flex justify-center py-8">
-            <Loader2 className="w-6 h-6 text-brand-500 animate-spin" />
+            <Loader2 className="w-6 h-6 text-gray-700 animate-spin" />
           </div>
         ) : avaliacoes && avaliacoes.total > 0 ? (
           <div className="grid md:grid-cols-3 gap-6">
             {/* Summary */}
-            <div className="flex flex-col items-center justify-center p-4 bg-gray-800/50 rounded-xl">
-              <div className="text-5xl font-bold text-white mb-1">
+            <div className="flex flex-col items-center justify-center p-4 bg-champagne-100 dark:bg-gray-700 border border-black/10 dark:border-gray-600">
+              <div className="text-5xl font-bold text-gray-900 dark:text-white mb-1">
                 {avaliacoes.media_avaliacao?.toFixed(1) ?? '–'}
               </div>
               <StarRating rating={avaliacoes.media_avaliacao ?? null} size="md" showValue={false} />
-              <p className="text-gray-400 text-sm mt-2">{avaliacoes.total} avaliações</p>
+              <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">{avaliacoes.total} avaliações</p>
 
               {/* Distribution bars */}
               <div className="w-full mt-4 space-y-1.5">
@@ -284,20 +284,20 @@ export default function ProductDetailPage() {
             {/* List */}
             <div className="md:col-span-2 space-y-3">
               {avaliacoes.items.map((aval) => (
-                <div key={aval.id_avaliacao} className="bg-gray-800/40 rounded-xl p-4">
+                <div key={aval.id_avaliacao} className="bg-champagne-100 dark:bg-gray-700 border border-black/10 dark:border-gray-600 p-4">
                   <div className="flex items-center justify-between mb-2">
                     <StarRating rating={aval.avaliacao} size="sm" showValue={false} />
                     {aval.data_comentario && (
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
                         {new Date(aval.data_comentario).toLocaleDateString('pt-BR')}
                       </span>
                     )}
                   </div>
                   {aval.titulo_comentario && aval.titulo_comentario !== 'Sem título' && (
-                    <p className="font-medium text-gray-200 text-sm mb-1">{aval.titulo_comentario}</p>
+                    <p className="font-medium text-gray-800 dark:text-gray-200 text-sm mb-1">{aval.titulo_comentario}</p>
                   )}
                   {aval.comentario && aval.comentario !== 'Sem comentário' && (
-                    <p className="text-gray-400 text-sm">{aval.comentario}</p>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm">{aval.comentario}</p>
                   )}
                 </div>
               ))}
@@ -305,7 +305,7 @@ export default function ProductDetailPage() {
               {/* Avaliações pagination */}
               {avaliacoes.pages > 1 && (
                 <div className="flex items-center justify-between pt-2">
-                  <span className="text-sm text-gray-400">
+                  <span className="text-sm text-gray-500 dark:text-gray-400">
                     Página {avaliacoes.page} de {avaliacoes.pages}
                   </span>
                   <div className="flex gap-2">
@@ -330,7 +330,7 @@ export default function ProductDetailPage() {
           </div>
         ) : (
           <div className="text-center py-8">
-            <Package className="w-10 h-10 text-gray-700 mx-auto mb-2" />
+            <Package className="w-10 h-10 text-gray-300 mx-auto mb-2" />
             <p className="text-gray-500">Nenhuma avaliação encontrada para este produto.</p>
           </div>
         )}

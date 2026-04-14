@@ -118,7 +118,7 @@ export default function ProductFormPage() {
   if (isEditing && loadingProduto) {
     return (
       <div className="flex items-center justify-center py-24">
-        <Loader2 className="w-8 h-8 text-brand-500 animate-spin" />
+        <Loader2 className="w-8 h-8 text-gray-700 animate-spin" />
       </div>
     )
   }
@@ -128,7 +128,7 @@ export default function ProductFormPage() {
       {/* Back */}
       <button
         onClick={() => navigate(-1)}
-        className="flex items-center gap-1.5 text-gray-400 hover:text-white mb-6 transition-colors"
+        className="flex items-center gap-1.5 text-gray-500 hover:text-gray-900 mb-6 transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
         Voltar
@@ -136,14 +136,14 @@ export default function ProductFormPage() {
 
       {/* Header */}
       <div className="mb-6 flex items-center gap-3">
-        <div className="p-2.5 bg-brand-600 rounded-xl">
+        <div className="p-2.5 bg-gray-900 border border-black">
           <Package className="w-5 h-5 text-white" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-white">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
             {isEditing ? 'Editar Produto' : 'Novo Produto'}
           </h1>
-          <p className="text-gray-400 text-sm">
+          <p className="text-gray-500 dark:text-gray-400 text-sm">
             {isEditing ? `Editando: ${produto?.nome_produto}` : 'Preencha as informações do produto'}
           </p>
         </div>
@@ -151,9 +151,9 @@ export default function ProductFormPage() {
 
       {/* Error banner */}
       {mutationError && (
-        <div className="card p-4 mb-4 border-red-800 bg-red-950/30 flex items-center gap-3">
-          <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0" />
-          <p className="text-red-300 text-sm">
+        <div className="card p-4 mb-4 border-red-300 bg-red-50 flex items-center gap-3">
+          <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
+          <p className="text-red-700 text-sm">
             Erro ao salvar produto. Verifique os dados e tente novamente.
           </p>
         </div>
@@ -163,8 +163,8 @@ export default function ProductFormPage() {
       <form onSubmit={handleSubmit} className="card p-6 space-y-5">
         {/* Nome */}
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-1.5">
-            Nome do Produto <span className="text-red-400">*</span>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+            Nome do Produto <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
@@ -174,14 +174,14 @@ export default function ProductFormPage() {
             className={`input ${errors.nome_produto ? 'border-red-500 focus:ring-red-500' : ''}`}
           />
           {errors.nome_produto && (
-            <p className="text-red-400 text-xs mt-1">{errors.nome_produto}</p>
+            <p className="text-red-600 text-xs mt-1">{errors.nome_produto}</p>
           )}
         </div>
 
         {/* Categoria */}
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-1.5">
-            Categoria <span className="text-red-400">*</span>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+            Categoria <span className="text-red-500">*</span>
           </label>
           {categorias && categorias.length > 0 ? (
             <select
@@ -207,19 +207,19 @@ export default function ProductFormPage() {
             />
           )}
           {errors.categoria_produto && (
-            <p className="text-red-400 text-xs mt-1">{errors.categoria_produto}</p>
+            <p className="text-red-600 text-xs mt-1">{errors.categoria_produto}</p>
           )}
         </div>
 
         {/* Divider */}
-        <div className="border-t border-gray-800 pt-4">
-          <h3 className="text-sm font-semibold text-gray-400 mb-4 uppercase tracking-wider">
+        <div className="border-t border-black/10 pt-4">
+          <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-4 uppercase tracking-wider">
             Dimensões (opcional)
           </h3>
           <div className="grid grid-cols-2 gap-4">
             {/* Peso */}
             <div>
-              <label className="block text-xs font-medium text-gray-400 mb-1">
+              <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">
                 Peso (gramas)
               </label>
               <input
@@ -235,7 +235,7 @@ export default function ProductFormPage() {
 
             {/* Comprimento */}
             <div>
-              <label className="block text-xs font-medium text-gray-400 mb-1">
+              <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">
                 Comprimento (cm)
               </label>
               <input
@@ -251,7 +251,7 @@ export default function ProductFormPage() {
 
             {/* Altura */}
             <div>
-              <label className="block text-xs font-medium text-gray-400 mb-1">
+              <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">
                 Altura (cm)
               </label>
               <input
@@ -267,7 +267,7 @@ export default function ProductFormPage() {
 
             {/* Largura */}
             <div>
-              <label className="block text-xs font-medium text-gray-400 mb-1">
+              <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">
                 Largura (cm)
               </label>
               <input
@@ -284,7 +284,7 @@ export default function ProductFormPage() {
         </div>
 
         {/* Submit */}
-        <div className="flex justify-end gap-3 pt-2 border-t border-gray-800">
+        <div className="flex justify-end gap-3 pt-2 border-t border-black/10">
           <button
             type="button"
             onClick={() => navigate(-1)}

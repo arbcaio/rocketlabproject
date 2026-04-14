@@ -3,7 +3,7 @@ import uuid
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
-from sqlalchemy import func, select
+from sqlalchemy import func, select, case, nulls_last
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -82,31 +82,114 @@ def _stats_para_produto(id_produto: str, db: Session) -> dict:
 def listar_produtos(
     search: Optional[str] = Query(None, description="Busca por nome ou categoria"),
     categoria: Optional[str] = Query(None, description="Filtrar por categoria"),
+    ordenar: Optional[str] = Query(None, description="Ordenação: nome | avaliacao | vendas"),
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),
     db: Session = Depends(get_db),
 ):
-    """Lista todos os produtos com suporte a busca, filtro por categoria e paginação."""
-    query = select(Produto)
+    """Lista todos os produtos com suporte a busca, filtro por categoria, ordenação e paginação."""
+
+    # ── Subquery: média e total de avaliações por produto ───────────────────
+    aval_sub = (
+        select(
+            ItemPedido.id_produto.label("id_produto"),
+            func.avg(AvaliacaoPedido.avaliacao).label("media_aval"),
+            func.count(AvaliacaoPedido.id_avaliacao).label("total_aval"),
+        )
+        .join(Pedido, AvaliacaoPedido.id_pedido == Pedido.id_pedido)
+        .join(ItemPedido, ItemPedido.id_pedido == Pedido.id_pedido)
+        .group_by(ItemPedido.id_produto)
+        .subquery()
+    )
+
+    # ── Subquery: total de vendas e preço médio por produto ─────────────────
+    vendas_sub = (
+        select(
+            ItemPedido.id_produto.label("id_produto"),
+            func.count(ItemPedido.id_item).label("total_vendas"),
+            func.avg(ItemPedido.preco_BRL).label("preco_medio"),
+        )
+        .group_by(ItemPedido.id_produto)
+        .subquery()
+    )
+
+    # ── Query base com stats ─────────────────────────────────────────────────
+    base = (
+        select(
+            Produto,
+            aval_sub.c.media_aval,
+            aval_sub.c.total_aval,
+            vendas_sub.c.total_vendas,
+            vendas_sub.c.preco_medio,
+        )
+        .outerjoin(aval_sub, aval_sub.c.id_produto == Produto.id_produto)
+        .outerjoin(vendas_sub, vendas_sub.c.id_produto == Produto.id_produto)
+    )
 
     if search:
         termo = f"%{search.lower()}%"
-        query = query.where(
+        base = base.where(
             func.lower(Produto.nome_produto).like(termo)
             | func.lower(Produto.categoria_produto).like(termo)
         )
 
     if categoria:
-        query = query.where(Produto.categoria_produto == categoria)
+        cats = [c.strip() for c in categoria.split(",") if c.strip()]
+        if len(cats) == 1:
+            base = base.where(Produto.categoria_produto == cats[0])
+        elif cats:
+            base = base.where(Produto.categoria_produto.in_(cats))
 
-    total = db.scalar(select(func.count()).select_from(query.subquery()))
+    total = db.scalar(select(func.count()).select_from(base.subquery()))
     pages = math.ceil(total / page_size) if total else 1
 
-    items = db.scalars(
-        query.order_by(Produto.nome_produto)
+    # ── Ordenação ────────────────────────────────────────────────────────────
+    if ordenar == "avaliacao":
+        order_clause = [
+            nulls_last(aval_sub.c.media_aval.desc()),
+            nulls_last(aval_sub.c.total_aval.desc()),
+            Produto.nome_produto,
+        ]
+    elif ordenar == "vendas":
+        order_clause = [
+            nulls_last(vendas_sub.c.total_vendas.desc()),
+            Produto.nome_produto,
+        ]
+    elif ordenar == "preco_asc":
+        order_clause = [
+            nulls_last(vendas_sub.c.preco_medio.asc()),
+            Produto.nome_produto,
+        ]
+    elif ordenar == "preco_desc":
+        order_clause = [
+            nulls_last(vendas_sub.c.preco_medio.desc()),
+            Produto.nome_produto,
+        ]
+    else:
+        order_clause = [Produto.nome_produto]
+
+    rows = db.execute(
+        base.order_by(*order_clause)
         .offset((page - 1) * page_size)
         .limit(page_size)
     ).all()
+
+    items = [
+        ProdutoResponse(
+            id_produto=r.Produto.id_produto,
+            nome_produto=r.Produto.nome_produto,
+            categoria_produto=r.Produto.categoria_produto,
+            peso_produto_gramas=r.Produto.peso_produto_gramas,
+            comprimento_centimetros=r.Produto.comprimento_centimetros,
+            altura_centimetros=r.Produto.altura_centimetros,
+            largura_centimetros=r.Produto.largura_centimetros,
+            media_avaliacao=round(float(r.media_aval), 2) if r.media_aval else None,
+            total_avaliacoes=r.total_aval or 0,
+            total_vendas=r.total_vendas or 0,
+            preco_medio=round(float(r.preco_medio), 2) if r.preco_medio else None,
+        )
+        for r in rows
+    ]
 
     return PaginatedProdutos(
         items=items,
