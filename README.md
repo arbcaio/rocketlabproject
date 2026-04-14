@@ -33,6 +33,10 @@ cp .env.example .env
 alembic upgrade head
 
 # Popular com dados CSV
+# Os CSVs devem estar em rocketlab2026/files/ (buscado automaticamente)
+python seed.py
+
+# Caso os arquivos estejam em outro local:
 python seed.py --csv-dir "caminho/para/csvs"
 
 # Iniciar
@@ -41,7 +45,8 @@ python -m uvicorn app.main:app --reload --port 8000
 
 API: `http://localhost:8000` · Swagger: `http://localhost:8000/docs`
 
-**Arquivos CSV esperados:** `dim_consumidores.csv`, `dim_produtos.csv`, `dim_vendedores.csv`, `fat_pedidos.csv`, `fat_itens_pedidos.csv`, `fat_avaliacoes_pedidos.csv`
+**Arquivos CSV esperados** (coloque em `files/` na raiz do repositório):
+`dim_consumidores.csv`, `dim_produtos.csv`, `dim_vendedores.csv`, `fat_pedidos.csv`, `fat_itens_pedidos.csv`, `fat_avaliacoes_pedidos.csv`
 
 ---
 
@@ -85,6 +90,7 @@ npm test
 
 ```
 rocketlab2026/
+├── files/           # CSVs de dados (dim_consumidores.csv, dim_produtos.csv, ...)
 ├── backend/
 │   ├── app/
 │   │   ├── models/      # Modelos SQLAlchemy

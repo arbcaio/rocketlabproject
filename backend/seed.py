@@ -246,11 +246,14 @@ def seed(csv_dir: str):
 
 
 if __name__ == "__main__":
+    # Padrão: pasta files/ na raiz do repositório (um nível acima de backend/)
+    default_csv_dir = str(Path(__file__).parent.parent / "files")
+
     parser = argparse.ArgumentParser(description="Popula o banco de dados com dados CSV.")
     parser.add_argument(
         "--csv-dir",
-        default=".",
-        help="Caminho para a pasta com os arquivos CSV (padrão: pasta atual)",
+        default=default_csv_dir,
+        help=f"Caminho para a pasta com os arquivos CSV (padrão: {default_csv_dir})",
     )
     args = parser.parse_args()
     seed(args.csv_dir)
